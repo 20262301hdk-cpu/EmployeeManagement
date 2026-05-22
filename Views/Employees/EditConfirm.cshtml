@@ -1,0 +1,32 @@
+@model EmployeeFormViewModel
+@{
+    ViewData["Title"] = "社員編集 - 確認";
+}
+<h2>社員編集 - 確認</h2>
+
+<div class="alert alert-info">
+    本機能は <strong>チャレンジ課題 (T-14C / T-09C)</strong> です。
+    <code>Views/Employees/EditConfirm.cshtml</code> の <code>@* ... *@</code> を解除し、
+    <code>Controllers/EmployeesController.cs</code> の T-09C と合わせて実装してください。
+</div>
+<p><a asp-action="Index">一覧へ戻る</a></p>
+
+@* TODO: T-14C [チャレンジ] 確認画面 (テーブル + 戻る/更新フォーム) [Tag: @Model.* / asp-action / asp-route-id / hidden name="back" value="true"]
+   → 詳細設計書 §12.2.2 / §13.2
+   下記ブロックを解除して実装する。
+<p>以下の内容で更新します。</p>
+<table class="simple-table">
+    <tbody>
+        <tr><th>社員ID</th><td></td></tr>
+        <tr><th>氏名</th><td></td></tr>
+        <tr><th>メールアドレス</th><td></td></tr>
+        <tr><th>性別</th><td></td></tr>
+        <tr><th>住所</th><td></td></tr>
+        <tr><th>生年月日</th><td></td></tr>
+        <tr><th>ロール</th><td></td></tr>
+        <tr><th>部署</th><td></td></tr>
+    </tbody>
+</table>
+<div class="button-row">
+</div>
+*@

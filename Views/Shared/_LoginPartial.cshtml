@@ -1,0 +1,23 @@
+<div class="login-area">
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        @* TODO: T-14 [課題] F-14 ログイン中ユーザー Email 表示 [Tag: @User.Identity.Name]
+           → 詳細設計書 §12.2.2 / §13.1。下記ブロックを解除して有効化する。
+        <span>@User.Identity.Name</span>
+        *@
+        @* TODO: T-14C [チャレンジ] Admin バッジ [Tag: User.IsInRole]
+           → 詳細設計書 §12.2.2 / §13.2。下記ブロックを解除して有効化する。F-13 ユーザ権限判定の UI 出し分け。
+        @if (User.IsInRole("Admin"))
+        {
+            <span>[Admin]</span>
+        }
+        *@
+        <form class="signout-form" asp-controller="Account" asp-action="@("Log" + "out")" method="post">
+            <button type="submit" class="signout-button">ログアウト</button>
+        </form>
+    }
+    else
+    {
+        <a asp-controller="Account" asp-action="Login">ログイン</a>
+    }
+</div>

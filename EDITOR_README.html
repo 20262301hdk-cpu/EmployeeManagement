@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>EDITOR_README</title>
+  <style>
+
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+</style>
+  <style type="text/css">html {font-size: 12px;}body {font-family: system-ui, sans-serif;line-height: 1.7;margin: 2rem auto;padding: 0 1.5rem;max-width: 900px;}h1 {font-size: 1.9rem;font-weight: 700;border-bottom: 3px solid #444;padding-bottom: 0.3rem;margin-top: 3rem;margin-bottom: 1.5rem;}h2 {font-size: 1.6rem;font-weight: 600;border-left: 5px solid #666;padding-left: 0.6rem;margin-top: 2.5rem;margin-bottom: 1rem;}h3 {font-size: 1.3rem;font-weight: 600;border-left: 3px solid #999;padding-left: 0.5rem;margin-top: 2rem;margin-bottom: 0.8rem;}p {margin: 1rem 0;}ul, ol {padding-left: 1.5rem;margin: 1rem 0;}li {margin: 0.3rem 0;}table {width: 100%;border-collapse: collapse;margin: 1.5rem 0;table-layout: fixed;}th, td {padding: 0.5rem;border: 1px solid #ccc;text-align: left;word-wrap: break-word;overflow-wrap: break-word;white-space: normal;}th {background-color: #f0f0f0;font-weight: 600;}@media print {th {background-color: #f0f0f0 !important;-webkit-print-color-adjust: exact !important;print-color-adjust: exact !important;}}code {font-family: Consolas, "Courier New", monospace;background: #f5f5f5;padding: 0.1rem 0.3rem;border-radius: 3px;}pre code {display: block;padding: 1rem;overflow-x: auto;}img {max-width: 100%;height: auto;display: block;margin: 1rem auto;}@media print {section {page-break-before: auto !important;break-before: auto !important;}h1,section > h1:first-child {page-break-before: always !important;break-before: page !important;}h1:first-of-type,section:first-of-type > h1:first-child {page-break-before: auto !important;break-before: auto !important;}h1, h2, h3 {-webkit-print-color-adjust: exact !important;print-color-adjust: exact !important;}body {margin: 1cm;padding: 0;img {max-width: 100% !important;height: auto !important;page-break-inside: avoid !important;}}</style>
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#編集用プロジェクト-機能削減版" id="toc-編集用プロジェクト-機能削減版">編集用プロジェクト (機能削減版)</a>
+<ul>
+<li><a href="#マイグレーション関連機能は事前実装済み" id="toc-マイグレーション関連機能は事前実装済み">0. マイグレーション関連機能は事前実装済み</a></li>
+<li><a href="#初回起動手順-visual-studio" id="toc-初回起動手順-visual-studio">1. 初回起動手順 (Visual Studio)</a></li>
+<li><a href="#受講生環境で変更が必要になる場所" id="toc-受講生環境で変更が必要になる場所">3. 受講生環境で変更が必要になる場所</a></li>
+<li><a href="#todo-一覧" id="toc-todo-一覧">4. TODO 一覧</a></li>
+<li><a href="#編集してはいけないファイル" id="toc-編集してはいけないファイル">5. 編集してはいけないファイル</a></li>
+<li><a href="#動作確認のおすすめ順" id="toc-動作確認のおすすめ順">6. 動作確認のおすすめ順</a></li>
+<li><a href="#動作確認後-playwright-任意" id="toc-動作確認後-playwright-任意">7. 動作確認後 — Playwright (任意)</a></li>
+</ul></li>
+</ul>
+</nav>
+<section id="編集用プロジェクト-機能削減版" class="level1">
+<h1>編集用プロジェクト (機能削減版)</h1>
+<p><code>// TODO: T-XX [課題/チャレンジ] [API: ...]</code> / <code>&lt;!-- TODO: T-XX [課題] --&gt;</code> / <code>@* TODO: T-XXC [チャレンジ] [Tag: ...] *@</code> の形式で要点を空欄化したプロジェクト。<strong>TODO 本文は使用 API / タグヘルパー名と詳細設計書への参照のみのシンタックス備忘</strong>で、実装手順は <strong>詳細設計書 <code>(PRGDE010)06_詳細設計書_1.0.0.md</code> §7.2 / §12.2 / §6.4 / §8 / §9.1</strong> を正本とする。§13.1 / §13.2 は索引（T-番号 → 該当章節）。</p>
+<blockquote>
+<p><strong>配置先</strong>: 本プロジェクトフォルダは受講生が <strong><code>C:\AspNet_Exercise\EmployeeManagement\</code> にコピーしてから作業する</strong>前提に統一されている。コピー手順および提出（ZIP アップロード）の手順はスタートガイド <code>../../00_スタートガイド_受講生向け.md</code> §0.5 / §3 フェーズ E を参照。</p>
+<p><strong>E2E テスト同梱</strong>: 同階層に <code>EmployeeManagement.E2ETests/</code> フォルダがあり、<code>EmployeeManagement.sln</code> から両プロジェクトを参照する。E2E テストの実行手順は <code>../../../002_テスト/(PRGDE010)09_E2Eテスト実行ガイド_受講生向け_1.0.0.md</code> を参照。</p>
+</blockquote>
+<p><strong>本版は機能削減版です。</strong> T-03 / T-05 / T-10 / T-11 は事前実装済みで、受講生が実装するのは <strong>🎯 課題 (必須)</strong> と <strong>⭐ チャレンジ課題 (任意)</strong> の 2 段階構成です。</p>
+<table>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr>
+<th>区分</th>
+<th>凡例</th>
+<th>内容</th>
+<th>未実装時の挙動</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🎯 課題</td>
+<td><code>T-06</code> / <code>T-07</code> / <code>T-08</code> / <code>T-13</code> / <code>T-14</code> (接尾辞なし)</td>
+<td>F-03 一覧表示 / F-04 氏名検索 / F-07 社員登録 / F-11 入力チェック / F-14 ログインユーザ名表示</td>
+<td>未実装だと 500 エラーやフォーム未描画</td>
+</tr>
+<tr>
+<td>⭐ チャレンジ</td>
+<td><code>T-06C</code> / <code>T-09C</code> / <code>T-13C</code> / <code>T-14C</code> (接尾辞 <code>-C</code>)</td>
+<td>F-05 部署検索 / F-08 社員編集 / F-09 社員削除 / F-13 ユーザ権限判定</td>
+<td>未実装でもアプリは動作する (UI が表示されないだけ)</td>
+</tr>
+<tr>
+<td>🔒 事前実装</td>
+<td><code>Details.cshtml</code> / F-06 社員詳細表示 ほか</td>
+<td>F-01 ログイン / F-02 ログアウト / F-06 社員詳細表示 / F-10 アクセス拒否 / F-12 ログイン状態判定 (認証分岐)</td>
+<td>受講生は読むだけ</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>事前実装箇所はコード内の <code>// 事前実装 (削減版)</code> コメントで識別できます。チャレンジ未実装の Edit/Delete アクションは TempData にメッセージを残して一覧へ Redirect する暫定実装になっています。F-11 入力チェックは配布物に DataAnnotations 属性も <code>EmployeeFormViewModel</code> 用の <code>ValidationMessages.resx</code> エントリも含まれないため、T-07/T-13 (🎯 課題) 実装時にまとめて追加します。F-14 ログインユーザ名表示は <code>_LoginPartial.cshtml</code> の <code>&lt;span&gt;@User.Identity.Name&lt;/span&gt;</code> 行を T-14 (🎯 課題) 実装で有効化します。</p>
+</blockquote>
+<section id="マイグレーション関連機能は事前実装済み" class="level2">
+<h2>0. マイグレーション関連機能は事前実装済み</h2>
+<p>本版では DB 構築に関わる以下を事前提供しているため、受講生は実装不要。すべて <code>// 事前実装 (削減版)</code> コメントで識別できる。</p>
+<table>
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 39%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr>
+<th>提供物</th>
+<th>ファイル</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Initial マイグレーション</td>
+<td><code>Migrations/20260510065105_InitialCreate.cs</code> / <code>*.Designer.cs</code></td>
+<td>AspNetUsers / Departments / Employees ほかのスキーマ生成</td>
+</tr>
+<tr>
+<td>モデルスナップショット</td>
+<td><code>Migrations/ApplicationDbContextModelSnapshot.cs</code></td>
+<td>現行モデルのスナップショット</td>
+</tr>
+<tr>
+<td>自動マイグレーション呼び出し</td>
+<td><code>Program.cs</code> / <code>Program.Seed.cs</code> の <code>await db.Database.MigrateAsync</code></td>
+<td>アプリ起動時に未適用マイグレーションを自動適用</td>
+</tr>
+<tr>
+<td>シードデータ投入</td>
+<td><code>Program.Seed.cs</code> <code>SeedAsync</code> / <code>CreateUserAndEmployeeAsync</code> (T-11)</td>
+<td>初回起動時に Role / Department / User / Employee を投入</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>受講生は <code>Migrations/</code> 配下と <code>Program.cs</code> / <code>Program.Seed.cs</code> を <strong>編集してはならない</strong> (§5 参照)。受講生が実行する操作は §2 PMC で DB を作成・更新する の手順のみ。 アプリを <code>F5</code> / <code>Ctrl + F5</code> で起動するだけでも <code>MigrateAsync</code> が走るため DB は自動的に作成される。PMC からの <code>Update-Database</code> は明示的に DB を構築・確認したい場合の手順として案内する。</p>
+</blockquote>
+</section>
+<section id="初回起動手順-visual-studio" class="level2">
+<h2>1. 初回起動手順 (Visual Studio)</h2>
+<p>詳細は説明資料 <code>(PRGDE010)01_説明資料_1.0.0.md</code> §3.4 を参照する。ここでは最短手順だけを示す。</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 40%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>手順</th>
+<th>補足</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>EmployeeManagement.sln</code> を Visual Studio で開く</td>
+<td><code>IIS Express</code> ではなく <code>EmployeeManagement</code> プロファイルを使う</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>NuGet パッケージの復元</code> を実行</td>
+<td>CLI なら <code>dotnet restore</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>Ctrl + Shift + B</code> でビルド</td>
+<td>TODO 未実装段階ではエラーが残る場合がある</td>
+</tr>
+<tr>
+<td>4</td>
+<td>PMC で <code>Update-Database</code> を実行</td>
+<td>詳細は §2</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>Ctrl + F5</code> で起動し <code>http://localhost:5050/</code> を開く</td>
+<td>起動時に Identity ロール / ユーザー / Employee が <code>SeedAsync</code> から投入される (Department は §2 の <code>Update-Database</code> で投入済み)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>AccountController.cs は T-05 事前実装済みのためログイン関連コンパイルエラーは出ない。 ## 2. PMC (パッケージ マネージャー コンソール) で DB を作成・更新する</p>
+</blockquote>
+<blockquote>
+<p>Visual Studio 2022 同梱の <strong>PMC</strong> から EF Core マイグレーションを実行する手順を、起動から検証まで通しでまとめる。CLI (<code>dotnet ef</code>) を使う場合は §1.2 / §4 の右列「同等コマンド」を参照。</p>
+</blockquote>
+<section id="pmc-を開く" class="level3">
+<h3>2.1 PMC を開く</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 40%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>操作</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>メニュー <code>ツール</code> → <code>NuGet パッケージ マネージャー</code> → <code>パッケージ マネージャー コンソール</code> をクリック</td>
+<td>Visual Studio 下部に <code>パッケージ マネージャー コンソール</code> ペインが出現する。すでにペインがある場合は表示するだけで良い。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ペイン上部の <code>既定のプロジェクト</code> ドロップダウンで <code>EmployeeManagement</code> を選択</td>
+<td>これを忘れると <code>No DbContext was found</code> エラーが出る。ソリューション内のプロジェクトが 1 つしかないので最初から選択されているはずだが、必ず目視確認する。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>プロンプトが <code>PM&gt;</code> になっていることを確認</td>
+<td>この状態で EF Core 用の PowerShell コマンドレット (<code>Update-Database</code> / <code>Add-Migration</code> / <code>Drop-Database</code> / <code>Get-Migration</code> / <code>Script-Migration</code>) が使える。</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="主要コマンドと期待される出力" class="level3">
+<h3>2.2 主要コマンドと期待される出力</h3>
+<p><code>Update-Database</code> がメイン。それ以外は補助。<strong><code>Add-Migration</code> は受講生は使わない</strong>（マイグレーションは事前提供されているため）。</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 17%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>用途</th>
+<th>期待される代表的な出力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Update-Database</code></td>
+<td>未適用マイグレーションを LocalDB に適用 (DB が無ければ作成)</td>
+<td><code>Build started...</code> → <code>Build succeeded.</code> → <code>Applying migration &#39;20260510065105_InitialCreate&#39;.</code> → <code>Applying migration &#39;20260516054331_SeedDepartments&#39;.</code> → <code>Done.</code></td>
+</tr>
+<tr>
+<td><code>Get-Migration</code></td>
+<td>プロジェクト内のマイグレーション一覧を確認</td>
+<td><code>20260510065105_InitialCreate</code> と <code>20260516054331_SeedDepartments</code> の 2 行 (<code>Applied</code> 列が <code>True</code> ならば適用済み)</td>
+</tr>
+<tr>
+<td><code>Drop-Database -Force</code></td>
+<td><code>EmployeeManagementDb</code> を削除 (テスト DB は対象外)</td>
+<td><code>Dropping database &#39;EmployeeManagementDb&#39; on server &#39;(localdb)\MSSQLLocalDB&#39;.</code> → <code>Done.</code></td>
+</tr>
+<tr>
+<td><code>Script-Migration</code></td>
+<td>適用 SQL を確認用に出力</td>
+<td><code>CREATE TABLE [Departments] ... CREATE TABLE [Employees] ...</code> の DDL がコンソールに流れる</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>出力に <code>Build started...</code> <code>Build succeeded.</code> が含まれない場合は PMC が古い csproj をキャッシュしている。一度 <code>Ctrl + Shift + B</code> で全体ビルドしてから再実行する。</p>
+</blockquote>
+</section>
+<section id="よくあるエラーと対処" class="level3">
+<h3>2.3 よくあるエラーと対処</h3>
+<table>
+<colgroup>
+<col style="width: 65%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr>
+<th>エラーメッセージ (抜粋)</th>
+<th>原因</th>
+<th>対処</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Your startup project &#39;EmployeeManagement&#39; doesn&#39;t reference Microsoft.EntityFrameworkCore.Design.</code></td>
+<td>NuGet パッケージ復元未完了</td>
+<td>ソリューション右クリック → <code>NuGet パッケージの復元</code> → 再度 <code>Update-Database</code></td>
+</tr>
+<tr>
+<td><code>No DbContext was found in assembly &#39;EmployeeManagement&#39;.</code></td>
+<td>既定のプロジェクト未選択 / TODO 未実装でビルド失敗中</td>
+<td><code>既定のプロジェクト</code> を <code>EmployeeManagement</code> に切替。ビルドが通っていない場合は §1.2 の手順 4 (<code>Ctrl + Shift + B</code>) を先に成功させる</td>
+</tr>
+<tr>
+<td><code>The term &#39;Update-Database&#39; is not recognized</code></td>
+<td><code>Microsoft.EntityFrameworkCore.Tools</code> の PowerShell モジュールが読み込まれていない</td>
+<td>Visual Studio を再起動し、<code>ツール</code> メニューから PMC を開き直す</td>
+</tr>
+<tr>
+<td><code>A network-related or instance-specific error occurred while establishing a connection... (provider: SQL Network Interfaces)</code></td>
+<td>LocalDB が停止中</td>
+<td>PowerShell で <code>sqllocaldb start MSSQLLocalDB</code>。説明資料 §3.4.2 / SQL 文 §2.2 を参照</td>
+</tr>
+<tr>
+<td><code>Cannot drop database &quot;EmployeeManagementDb&quot; because it is currently in use.</code></td>
+<td>アプリがまだ動いている / SQL Server オブジェクト エクスプローラーで開いたままのクエリウィンドウがある</td>
+<td>アプリを <code>Shift + F5</code> で停止、SSOX のクエリウィンドウを閉じてから再度 <code>Drop-Database -Force</code></td>
+</tr>
+<tr>
+<td><code>The migration &#39;20260510065105_InitialCreate&#39; has already been applied to the database.</code></td>
+<td>何度も <code>Update-Database</code> を実行した</td>
+<td><strong>エラーではない</strong>。すでに適用済みである旨の通知。DB を作り直したいときだけ <code>Drop-Database -Force</code> → <code>Update-Database</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sql-server-オブジェクト-エクスプローラー-ssox-で検証する" class="level3">
+<h3>2.4 SQL Server オブジェクト エクスプローラー (SSOX) で検証する</h3>
+<p><code>Update-Database</code> 完了後、テーブルが揃っていることを目視確認する。</p>
+<table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 33%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>操作</th>
+<th>確認内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>メニュー <code>表示</code> → <code>SQL Server オブジェクト エクスプローラー</code> を開く</td>
+<td>左ペインに <code>SQL Server</code> ノード</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>(localdb)\MSSQLLocalDB</code> → <code>データベース</code> を展開、<code>EmployeeManagementDb</code> ノードを右クリック → <code>更新</code></td>
+<td>DB 一覧が最新化される (<code>Update-Database</code> 実行直後でないと表示遅延あり)</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>EmployeeManagementDb</code> → <code>テーブル</code> を展開</td>
+<td><code>dbo.AspNetRoles</code> / <code>dbo.AspNetRoleClaims</code> / <code>dbo.AspNetUsers</code> / <code>dbo.AspNetUserRoles</code> / <code>dbo.AspNetUserClaims</code> / <code>dbo.AspNetUserLogins</code> / <code>dbo.AspNetUserTokens</code> / <code>dbo.Departments</code> / <code>dbo.Employees</code> / <code>dbo.__EFMigrationsHistory</code> の 10 テーブルが並ぶ</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>dbo.__EFMigrationsHistory</code> を右クリック → <code>データの表示</code></td>
+<td><code>MigrationId = 20260510065105_InitialCreate</code> と <code>20260516054331_SeedDepartments</code> の 2 行が入っている (適用済みであることの証跡)</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>dbo.Departments</code> → <code>データの表示</code></td>
+<td><code>Update-Database</code> 実行直後から <code>営業部</code> / <code>経理部</code> / <code>総務部</code> の 3 行が入っている (Migration の HasData による)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Department は <code>Update-Database</code> 完了時点で既に 3 件投入されている。Identity ロール / ユーザー / Employee はアプリを <code>F5</code> / <code>Ctrl + F5</code> で 1 度起動するとシードされる。</p>
+</blockquote>
+</section>
+<section id="db-を初期化したいとき" class="level3">
+<h3>2.5 DB を初期化したいとき</h3>
+<table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 50%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>コマンド</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>Drop-Database -Force</code></td>
+<td><code>EmployeeManagementDb</code> を削除</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>Update-Database</code></td>
+<td>空の DB を再作成、マイグレーション適用 (Department 3 件は HasData から投入される)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>(Visual Studio で <code>Ctrl + F5</code>)</td>
+<td>起動時に <code>SeedAsync</code> が Identity ロール / ユーザー / Employee を再投入</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>テスト DB (<code>EmployeeManagementDb_Test</code>) は E2E テストの <code>Fixtures/DatabaseReset.cs</code> が毎テスト前に自動でクリーンするため通常は手動操作不要。</p>
+</blockquote>
+</section>
+</section>
+<section id="受講生環境で変更が必要になる場所" class="level2">
+<h2>3. 受講生環境で変更が必要になる場所</h2>
+<p>ポート競合や DB 命名規則の都合で値を変える場合、<strong>変更箇所をすべて同じ値に揃える</strong> こと。1 箇所だけ書き換えると編集用とテストで設定が乖離して動かなくなる。</p>
+<section id="起動ポート-既定-5050" class="level3">
+<h3>3.1 起動ポート (既定 <code>5050</code>)</h3>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 42%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>ファイル</th>
+<th>該当キー</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>Properties/launchSettings.json</code></td>
+<td><code>profiles.EmployeeManagement.applicationUrl</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>EmployeeManagement.E2ETests/Fixtures/GlobalAppHost.cs</code> (編集用同梱)</td>
+<td><code>BaseUrl = &quot;http://localhost:5050&quot;</code> および <code>Port = 5050</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="localdb-接続文字列" class="level3">
+<h3>3.2 LocalDB 接続文字列</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>ファイル</th>
+<th>該当キー</th>
+<th>DB 名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>appsettings.json</code></td>
+<td><code>ConnectionStrings.DefaultConnection</code></td>
+<td><code>EmployeeManagementDb</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>appsettings.Test.json</code></td>
+<td>同上</td>
+<td><code>EmployeeManagementDb_Test</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>EmployeeManagement.E2ETests/appsettings.Test.json</code> (編集用同梱)</td>
+<td>同上</td>
+<td><code>EmployeeManagementDb_Test</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="配布物の配置を変更した場合" class="level3">
+<h3>3.3 配布物の配置を変更した場合</h3>
+<p>E2E は編集用ソリューションに同梱されている (<code>EmployeeManagement.E2ETests/</code>)。配布物を別構造へ再配置したら、<code>GlobalAppHost.cs</code> の <code>ResolveAppProjectDirectory</code> と上記の相対パスを必ず再計算する。</p>
+</section>
+</section>
+<section id="todo-一覧" class="level2">
+<h2>4. TODO 一覧</h2>
+<section id="受講生実装" class="level3">
+<h3>4.1 受講生実装</h3>
+<section id="課題-必須" class="level4">
+<h4>4.1.1 🎯 課題 (必須)</h4>
+<p>未実装だと一覧/登録/詳細が動作しません。最初に着手してください。</p>
+<table>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 29%" />
+<col style="width: 16%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr>
+<th>TODO</th>
+<th>ファイル</th>
+<th style="text-align: right;">箇所</th>
+<th>内容の概要</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T-06</td>
+<td><code>Controllers/EmployeesController.cs</code></td>
+<td style="text-align: right;">1</td>
+<td><code>Index</code>: <code>empName</code> 部分一致の <code>Where</code> を追加する (F-04 氏名検索)</td>
+</tr>
+<tr>
+<td>T-07</td>
+<td><code>Controllers/EmployeesController.cs</code></td>
+<td style="text-align: right;">1</td>
+<td><code>Create(POST)</code>: 入力検証 (<code>ModelState.IsValid</code> 分岐) + <code>TempData</code> 保存 + Redirect (F-07 / F-11)。<code>EmployeeFormViewModel.cs</code> の DataAnnotations と <code>ValidationMessages.resx</code> の EmployeeForm 用エントリも併せて付与</td>
+</tr>
+<tr>
+<td>T-08</td>
+<td><code>Controllers/EmployeesController.cs</code></td>
+<td style="text-align: right;">1</td>
+<td><code>CreateComplete</code>: <code>UserManager</code> + <code>Employee</code> 追加 (F-07)</td>
+</tr>
+<tr>
+<td>T-13</td>
+<td><code>Views/Employees/Create.cshtml</code></td>
+<td style="text-align: right;">1</td>
+<td>新規登録の入力フォーム View + <code>asp-validation-summary</code> / <code>asp-validation-for</code> (F-07 / F-11)</td>
+</tr>
+<tr>
+<td>T-14</td>
+<td><code>Views/Employees/Index.cshtml</code> / <code>CreateConfirm.cshtml</code> / <code>CreateComplete.cshtml</code> / <code>Views/Shared/_LoginPartial.cshtml</code> (ユーザ名表示行有効化)</td>
+<td style="text-align: right;">4</td>
+<td>一覧基本表示 (氏名検索フォーム+テーブル+詳細リンク) / 登録確認 / 登録完了 + ログイン中ユーザ名表示 (F-03 / F-07 / F-14)。<code>Details.cshtml</code> は §4.2 事前実装枠</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="チャレンジ課題-任意" class="level4">
+<h4>4.1.2 ⭐ チャレンジ課題 (任意)</h4>
+<p>未実装でもアプリは動作します (該当 UI が非表示)。課題が一通り完成してから着手してください。</p>
+<table>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 29%" />
+<col style="width: 16%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr>
+<th>TODO</th>
+<th>ファイル</th>
+<th style="text-align: right;">箇所</th>
+<th>内容の概要</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T-06C</td>
+<td><code>Controllers/EmployeesController.cs</code></td>
+<td style="text-align: right;">1</td>
+<td><code>Index</code>: <code>deptId</code> 完全一致の <code>Where</code> 追加 + <code>ToPagedListAsync</code> ページング (F-05 / ページング)</td>
+</tr>
+<tr>
+<td>T-09C</td>
+<td><code>Controllers/EmployeesController.cs</code></td>
+<td style="text-align: right;">3</td>
+<td><code>Edit(POST)</code> / <code>EditComplete</code> / <code>DeleteComplete</code> (F-08 / F-09)</td>
+</tr>
+<tr>
+<td>T-13C</td>
+<td><code>Views/Employees/Edit.cshtml</code></td>
+<td style="text-align: right;">1</td>
+<td>編集の入力フォーム View + <code>asp-validation-summary</code> / <code>asp-validation-for</code> (F-08 / F-11)</td>
+</tr>
+<tr>
+<td>T-14C</td>
+<td><code>Views/Employees/Index.cshtml</code> / <code>EditConfirm.cshtml</code> / <code>EditComplete.cshtml</code> / <code>Delete.cshtml</code> / <code>DeleteComplete.cshtml</code> / <code>Shared/_LoginPartial.cshtml</code> ([Admin] バッジ)</td>
+<td style="text-align: right;">6</td>
+<td>一覧の部署DD/ページャ/編集削除リンク / 新規登録リンク / Admin バッジ / 編集削除画面群 (F-05 / F-08 / F-09 / F-13)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>チャレンジ部分は Razor コメント <code>@* ... *@</code> でコメントアウトされています。受講生は該当ブロックを解除し、内側の TODO に従って実装してください。</p>
+</blockquote>
+</section>
+</section>
+<section id="事前実装-削減版" class="level3">
+<h3>4.2 事前実装 (削減版)</h3>
+<table>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 28%" />
+<col style="width: 34%" />
+<col style="width: 18%" />
+</colgroup>
+<thead>
+<tr>
+<th>TODO</th>
+<th>ファイル</th>
+<th>内容の概要</th>
+<th>状態</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T-03</td>
+<td><code>Data/ApplicationDbContext.cs</code></td>
+<td><code>OnModelCreating</code> で Employee/Department のリレーション設定</td>
+<td>🔒 事前実装 (削減版)</td>
+</tr>
+<tr>
+<td>T-05</td>
+<td><code>Controllers/AccountController.cs</code></td>
+<td><code>Login(POST)</code> で SignInManager 認証、<code>Logout</code> で SignOut</td>
+<td>🔒 事前実装 (削減版)</td>
+</tr>
+<tr>
+<td>T-10</td>
+<td><code>Filter/LoggingActionFilter.cs</code></td>
+<td><code>OnActionExecuting/Executed</code> で <code>_logger.LogInformation</code></td>
+<td>🔒 事前実装 (削減版)</td>
+</tr>
+<tr>
+<td>T-11</td>
+<td><code>Program.cs</code> / <code>Program.Seed.cs</code></td>
+<td><code>SeedAsync</code> と <code>CreateUserAndEmployeeAsync</code> の本体</td>
+<td>🔒 事前実装 (削減版)</td>
+</tr>
+<tr>
+<td>F-12</td>
+<td><code>Controllers/*</code> の <code>[Authorize]</code> 属性 + <code>Views/Shared/_LoginPartial.cshtml</code> の認証分岐 (ログイン/ログアウトボタンの出し分け)</td>
+<td>ログイン状態判定 (未認証ユーザーは Login へリダイレクト)。ログイン中ユーザ名表示は F-14 🎯 課題 (T-14 に内包) として切り出し済み</td>
+<td>🔒 事前実装 (削減版)</td>
+</tr>
+<tr>
+<td>(M-00)</td>
+<td><code>Migrations/*.cs</code> (InitialCreate / SeedDepartments)</td>
+<td>EF Core マイグレーション本体 + Department HasData (§0 参照、手動 <code>Update-Database</code> 適用)</td>
+<td>🔒 事前実装 (削減版・編集不可)</td>
+</tr>
+<tr>
+<td>(T-14 一部)</td>
+<td><code>Views/Employees/Details.cshtml</code></td>
+<td>社員詳細表示 View (F-06)。Action <code>Details(int id)</code> も事前実装</td>
+<td>🔒 事前実装 (削減版)</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="編集してはいけないファイル" class="level2">
+<h2>5. 編集してはいけないファイル</h2>
+<p><code>Views/Employees/**/*.cshtml</code> は 🎯 課題 T-13 / T-14 と ⭐ チャレンジ T-13C / T-14C として受講生実装対象である (ただし <code>Views/Employees/Details.cshtml</code> は機能削減版で事前実装済みのため対象外)。以下は事前実装済みまたは触る必要のないファイルなので <strong>書き換えないこと</strong>。ただし 🎯 課題で例外あり: T-07/T-13 (F-11 入力チェック) で <code>Resources/ValidationMessages.resx</code> と <code>ViewModels/EmployeeFormViewModel.cs</code> に追記、T-14 (F-14 ログインユーザ名表示) で <code>Views/Shared/_LoginPartial.cshtml</code> のユーザ名表示行を有効化、⭐ T-14C (F-13 Admin バッジ) でも <code>Views/Shared/_LoginPartial.cshtml</code> を編集する。</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 42%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr>
+<th>区分</th>
+<th>ファイル</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>マイグレーション</td>
+<td><code>Migrations/*.cs</code></td>
+<td>EF Core の DB 構築に必要。事前実装済み (§0 参照)</td>
+</tr>
+<tr>
+<td>起動・シード</td>
+<td><code>Program.cs</code> / <code>Program.Seed.cs</code></td>
+<td>T-11 事前実装済み</td>
+</tr>
+<tr>
+<td>DbContext</td>
+<td><code>Data/ApplicationDbContext.cs</code></td>
+<td>T-03 事前実装済み</td>
+</tr>
+<tr>
+<td>アクションフィルター</td>
+<td><code>Filter/LoggingActionFilter.cs</code></td>
+<td>T-10 事前実装済み</td>
+</tr>
+<tr>
+<td>認証</td>
+<td><code>Controllers/AccountController.cs</code></td>
+<td>T-05 事前実装済み</td>
+</tr>
+<tr>
+<td>社員詳細 View + Action (削減版固有)</td>
+<td><code>Views/Employees/Details.cshtml</code> + <code>EmployeesController.Details(int id)</code></td>
+<td>F-06 として事前実装済み (T-14 から切り離し)</td>
+</tr>
+<tr>
+<td>リソース</td>
+<td><code>Resources/ValidationMessages.resx</code></td>
+<td>F-01 ログイン用エントリのみ配布 (※ F-11 課題で T-07/T-13 の一環として EmployeeForm 用エントリを追記)</td>
+</tr>
+<tr>
+<td>共通ビュー</td>
+<td><code>Views/Shared/**</code> (※ <code>_LoginPartial.cshtml</code> は T-14 / T-14C で編集可) / <code>Views/Account/**</code> / <code>Views/Home/**</code> / <code>Views/_*.cshtml</code></td>
+<td>共通レイアウト・認証・ホーム画面</td>
+</tr>
+<tr>
+<td>エンティティ</td>
+<td><code>Models/*.cs</code></td>
+<td>プロパティ定義</td>
+</tr>
+<tr>
+<td>ViewModel</td>
+<td><code>ViewModels/*.cs</code></td>
+<td>(※ <code>EmployeeFormViewModel.cs</code> は F-11 課題で T-07/T-13 の一環として DataAnnotations 属性を付与可。<code>LoginViewModel.cs</code> の検証属性は F-01 事前実装)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="動作確認のおすすめ順" class="level2">
+<h2>6. 動作確認のおすすめ順</h2>
+<section id="課題-必須-1" class="level3">
+<h3>6.1 🎯 課題 (必須)</h3>
+<ol type="1">
+<li>T-13 (Create.cshtml) → 新規登録の入力フォームの入力欄と検証メッセージが表示される</li>
+<li>T-14 (Index/CreateConfirm/CreateComplete) → 一覧 / 登録確認 / 登録完了画面が描画される (詳細画面は <code>Details.cshtml</code> が事前実装で配布時から動作)</li>
+<li>T-06 → 一覧画面で氏名検索が動作する (部署検索/ページングはチャレンジ範囲)</li>
+<li>T-07 / T-08 → 新規登録ができる</li>
+</ol>
+</section>
+<section id="チャレンジ課題-任意-1" class="level3">
+<h3>6.2 ⭐ チャレンジ課題 (任意)</h3>
+<ol start="5" type="1">
+<li>T-13C (Edit.cshtml) → 編集画面の入力フォームを解除して実装</li>
+<li>T-14C (Index 部署DD/ページャ/編集削除リンク / 新規登録リンク / Admin バッジ / EditConfirm/EditComplete/Delete/DeleteComplete) → コメントアウト解除して各画面を実装</li>
+<li>T-06C → 部署検索 + ページング (<code>ToPagedListAsync</code>) を実装</li>
+<li>T-09C → 編集 / 削除の Controller アクションを実装</li>
+</ol>
+</section>
+</section>
+<section id="動作確認後-playwright-任意" class="level2">
+<h2>7. 動作確認後 — Playwright (任意)</h2>
+<ul>
+<li>E2E テストは編集用ソリューションに同梱されている (<code>EmployeeManagement.E2ETests/</code>)。受講生は自分で編集した編集用プロジェクトに対してそのまま動かせる。</li>
+<li>初回のみ <code>dotnet exec ... Microsoft.Playwright.dll install chromium</code> でブラウザドライバを入れる。</li>
+<li>Smoke 5 件 (課題範囲) と Challenge 2 件 (チャレンジ範囲) の 2 段階構成。
+<ul>
+<li><code>dotnet test EmployeeManagement.E2ETests --filter &quot;TestCategory=Smoke&quot;</code> → 課題のみ実装した状態で全 PASS する 5 件 (T-01 / T-04 / T-12 / T-14 / T-16)</li>
+<li><code>dotnet test EmployeeManagement.E2ETests --filter &quot;TestCategory=Challenge&quot;</code> → チャレンジ実装後に PASS する 2 件 (T-12C / T-23 / T-29)</li>
+</ul></li>
+<li>Visual Studio のテスト エクスプローラーから実行する場合は、カテゴリフィルタを <code>TestCategory=Smoke</code> (もしくは <code>TestCategory=Challenge</code>) で絞る。</li>
+<li>失敗時は <code>bin/Debug/net8.0/screenshots/</code> のキャプチャと <code>bin/Debug/net8.0/traces/{TestFullName}.zip</code> を確認する。</li>
+<li>ポートや DB 名を変更した場合は §3 の表に従ってすべて揃える。</li>
+</ul>
+</section>
+</section>
+</body>
+</html>

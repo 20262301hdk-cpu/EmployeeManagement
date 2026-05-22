@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+  <style type="text/css">html {font-size: 12px;}body {font-family: system-ui, sans-serif;line-height: 1.7;margin: 2rem auto;padding: 0 1.5rem;max-width: 900px;}h1 {font-size: 1.9rem;font-weight: 700;border-bottom: 3px solid #444;padding-bottom: 0.3rem;margin-top: 3rem;margin-bottom: 1.5rem;}h2 {font-size: 1.6rem;font-weight: 600;border-left: 5px solid #666;padding-left: 0.6rem;margin-top: 2.5rem;margin-bottom: 1rem;}h3 {font-size: 1.3rem;font-weight: 600;border-left: 3px solid #999;padding-left: 0.5rem;margin-top: 2rem;margin-bottom: 0.8rem;}p {margin: 1rem 0;}ul, ol {padding-left: 1.5rem;margin: 1rem 0;}li {margin: 0.3rem 0;}table {width: 100%;border-collapse: collapse;margin: 1.5rem 0;table-layout: fixed;}th, td {padding: 0.5rem;border: 1px solid #ccc;text-align: left;word-wrap: break-word;overflow-wrap: break-word;white-space: normal;}th {background-color: #f0f0f0;font-weight: 600;}@media print {th {background-color: #f0f0f0 !important;-webkit-print-color-adjust: exact !important;print-color-adjust: exact !important;}}code {font-family: Consolas, "Courier New", monospace;background: #f5f5f5;padding: 0.1rem 0.3rem;border-radius: 3px;}pre code {display: block;padding: 1rem;overflow-x: auto;}img {max-width: 100%;height: auto;display: block;margin: 1rem auto;}@media print {section {page-break-before: auto !important;break-before: auto !important;}h1,section > h1:first-child {page-break-before: always !important;break-before: page !important;}h1:first-of-type,section:first-of-type > h1:first-child {page-break-before: auto !important;break-before: auto !important;}h1, h2, h3 {-webkit-print-color-adjust: exact !important;print-color-adjust: exact !important;}body {margin: 1cm;padding: 0;img {max-width: 100% !important;height: auto !important;page-break-inside: avoid !important;}}</style>
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#employeemanagement.e2etests" id="toc-employeemanagement.e2etests">EmployeeManagement.E2ETests</a>
+<ul>
+<li><a href="#初回セットアップ-1-回だけ" id="toc-初回セットアップ-1-回だけ">1. 初回セットアップ (1 回だけ)</a></li>
+<li><a href="#通常実行" id="toc-通常実行">2. 通常実行</a></li>
+<li><a href="#テストカテゴリ" id="toc-テストカテゴリ">3. テストカテゴリ</a></li>
+<li><a href="#スクリーンショット確認" id="toc-スクリーンショット確認">4. スクリーンショット確認</a></li>
+<li><a href="#仕組み" id="toc-仕組み">5. 仕組み</a></li>
+<li><a href="#トラブルシュート" id="toc-トラブルシュート">6. トラブルシュート</a></li>
+<li><a href="#既知の制約" id="toc-既知の制約">7. 既知の制約</a></li>
+</ul></li>
+</ul>
+</nav>
+<blockquote>
+<p>実装ステータス: 📌 配布済み（本プロジェクト全体が配布物。受講生は触らない） 受講生は TODO 実装後にテストを 実行するだけ。凡例: スタートガイド §1.1 を参照。</p>
+</blockquote>
+<section id="employeemanagement.e2etests" class="level1">
+<h1>EmployeeManagement.E2ETests</h1>
+<p>社員管理システム（機能削減版）の自動 E2E テスト。受講生は <strong>Visual Studio で「すべてのテストを実行」を押すだけ</strong> で動作確認できる。</p>
+<blockquote>
+<p><strong>配置（v1.2.0 以降）</strong>: 本プロジェクトは編集用ソリューションに同梱されており、受講生が <code>C:\AspNet_Exercise\EmployeeManagement\</code> にコピーすると <code>C:\AspNet_Exercise\EmployeeManagement\EmployeeManagement.E2ETests\</code> にこの README が置かれた状態になる。アプリ本体 (<code>EmployeeManagement.csproj</code>) は親フォルダの <code>C:\AspNet_Exercise\EmployeeManagement\</code> 直下にある。受講生向けの実行手順は <code>../../../002_テスト/(PRGDE010)09_E2Eテスト実行ガイド_受講生向け_1.0.0.md</code> に集約しているため、本書は補助情報としてのみ参照すること。</p>
+</blockquote>
+<section id="初回セットアップ-1-回だけ" class="level2">
+<h2>1. 初回セットアップ (1 回だけ)</h2>
+<ol type="1">
+<li><p><code>EmployeeManagement.sln</code> を Visual Studio 2022 で開く</p></li>
+<li><p>ソリューションのビルド (<code>Ctrl + Shift + B</code>)</p></li>
+<li><p>PowerShell でブラウザ ドライバをインストール:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dotnet exec <span class="op">--</span>runtimeconfig <span class="st">&quot;EmployeeManagement.E2ETests/bin/Debug/net8.0/EmployeeManagement.E2ETests.runtimeconfig.json&quot;</span> `</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>            <span class="op">--</span>depsfile     <span class="st">&quot;EmployeeManagement.E2ETests/bin/Debug/net8.0/EmployeeManagement.E2ETests.deps.json&quot;</span> `</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;EmployeeManagement.E2ETests/bin/Debug/net8.0/Microsoft.Playwright.dll&quot;</span> `</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>            install chromium</span></code></pre></div>
+<p>PowerShell 7 (<code>pwsh</code>) があれば次でも可。</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pwsh <span class="op">./</span>EmployeeManagement<span class="op">.</span><span class="fu">E2ETests</span><span class="op">/</span>bin<span class="op">/</span>Debug<span class="op">/</span>net8<span class="op">.</span><span class="dv">0</span><span class="op">/</span>playwright<span class="op">.</span><span class="fu">ps1</span> install chromium</span></code></pre></div></li>
+<li><p>LocalDB が動いていることを確認:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sqllocaldb info MSSQLLocalDB</span></code></pre></div>
+<p><code>State: Running</code> でない場合は <code>sqllocaldb start MSSQLLocalDB</code>。</p></li>
+</ol>
+</section>
+<section id="通常実行" class="level2">
+<h2>2. 通常実行</h2>
+<section id="visual-studio-受講生既定" class="level3">
+<h3>Visual Studio (受講生既定)</h3>
+<ul>
+<li>メニュー: <code>テスト</code> → <code>すべてのテストを実行</code></li>
+<li><code>.runsettings</code> 既定で <code>TestCategory=Smoke</code> が効き、🎯 課題範囲 5 件 (約 10 秒) を実行</li>
+<li>⭐ チャレンジ範囲は <code>TestCategory=Challenge</code> で別途絞り込み (3 件)</li>
+</ul>
+</section>
+<section id="cli" class="level3">
+<h3>CLI</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dotnet test <span class="op">--</span>filter TestCategory<span class="op">=</span>Smoke      <span class="co"># 🎯 課題範囲 5 件 (受講生向け既定)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dotnet test <span class="op">--</span>filter TestCategory<span class="op">=</span>Challenge  <span class="co"># ⭐ チャレンジ範囲 3 件 (チャレンジ実装後に PASS)</span></span></code></pre></div>
+</section>
+</section>
+<section id="テストカテゴリ" class="level2">
+<h2>3. テストカテゴリ</h2>
+<table>
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 37%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>カテゴリ</th>
+<th>ケース数</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Smoke</td>
+<td>5</td>
+<td>🎯 課題範囲のみで PASS する受講生既定セット。主要機能 (ログイン / 一覧 / 詳細 / 新規登録) の即時確認</td>
+</tr>
+<tr>
+<td>Challenge</td>
+<td>3</td>
+<td>⭐ チャレンジ実装後に PASS する追加セット。部署検索 (T-12C) / 編集 (T-23) / 削除 (T-29) の確認</td>
+</tr>
+</tbody>
+</table>
+<section id="smoke-5-ケース-課題範囲" class="level3">
+<h3>🎯 Smoke 5 ケース (課題範囲)</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>機能</th>
+<th>クラス</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T01</td>
+<td>ログイン成功 (一般ユーザー)</td>
+<td>LoginSmokeTests</td>
+</tr>
+<tr>
+<td>T04</td>
+<td>ログイン失敗 (未登録 email)</td>
+<td>LoginSmokeTests</td>
+</tr>
+<tr>
+<td>T12</td>
+<td>一覧緩い検証 (経理部の社員が含まれる)</td>
+<td>ListSmokeTests</td>
+</tr>
+<tr>
+<td>T14</td>
+<td>詳細画面遷移</td>
+<td>ListSmokeTests</td>
+</tr>
+<tr>
+<td>T16</td>
+<td>新規登録 完了パス (3 ステップ)</td>
+<td>CrudSmokeTests</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="challenge-3-ケース-チャレンジ範囲" class="level3">
+<h3>⭐ Challenge 3 ケース (チャレンジ範囲)</h3>
+<table>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 25%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>機能</th>
+<th>クラス</th>
+<th>必要な実装</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T12C</td>
+<td>部署検索 (経理部、厳密検証)</td>
+<td>ListSmokeTests</td>
+<td>T-06C / T-14C (部署DD)</td>
+</tr>
+<tr>
+<td>T23</td>
+<td>編集 完了パス (3 ステップ)</td>
+<td>CrudSmokeTests</td>
+<td>T-09C / T-13C / T-14C</td>
+</tr>
+<tr>
+<td>T29</td>
+<td>削除 完了パス (2 ステップ)</td>
+<td>CrudSmokeTests</td>
+<td>T-09C / T-14C</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="スクリーンショット確認" class="level2">
+<h2>4. スクリーンショット確認</h2>
+<ul>
+<li>出力先: <code>EmployeeManagement.E2ETests/bin/Debug/net8.0/screenshots/</code></li>
+<li>命名: <code>T-XX_stepN_label.png</code></li>
+<li>失敗時の Trace Viewer 用 zip: <code>bin/Debug/net8.0/traces/{TestFullName}.zip</code>
+<ul>
+<li>表示: PowerShell から <code>dotnet exec ... Microsoft.Playwright.dll show-trace path/to/trace.zip</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="仕組み" class="level2">
+<h2>5. 仕組み</h2>
+<ul>
+<li><code>Fixtures/GlobalAppHost.cs</code> (<code>[SetUpFixture]</code>): LocalDB 起動確認 → ポート 5050 probe → <code>dotnet run --environment Test --urls http://localhost:5050</code> を子プロセス起動 → <code>playwright install chromium</code> → <code>DatabaseReset.RestoreSeedAsync</code></li>
+<li><code>Fixtures/DatabaseReset.cs</code>: <code>EmployeeManagementDb_Test</code> に対し <code>DELETE FROM Employees / AspNetUserRoles / AspNetUsers / Departments</code> で完全リセット → <code>Program.SeedAsync</code> を呼んでシード再投入</li>
+<li><code>Fixtures/AppPageTest.cs</code>: <code>PageTest</code> 派生。各テスト前に DB リセット + Tracing 開始、失敗時は <code>traces/*.zip</code> 出力</li>
+<li><code>Helpers/LoginHelper.cs</code>: ログイン / ログアウト操作の共通ヘルパー</li>
+<li><code>Helpers/SeedConstants.cs</code>: シードデータの定数定義</li>
+</ul>
+</section>
+<section id="トラブルシュート" class="level2">
+<h2>6. トラブルシュート</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>症状</th>
+<th>対処</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ポート 5050 が使用中</td>
+<td><code>Get-NetTCPConnection -LocalPort 5050 \| %{Stop-Process -Id $_.OwningProcess -Force}</code></td>
+</tr>
+<tr>
+<td>LocalDB <code>Cannot create automatic instance</code></td>
+<td><code>sqllocaldb stop MSSQLLocalDB; sqllocaldb start MSSQLLocalDB</code></td>
+</tr>
+<tr>
+<td>ブラウザ未インストール</td>
+<td>上記セットアップ手順 3 を再実行</td>
+</tr>
+<tr>
+<td>DB が壊れた</td>
+<td><code>sqlcmd -S &quot;(localdb)\MSSQLLocalDB&quot; -d master -Q &quot;DROP DATABASE EmployeeManagementDb_Test&quot;</code> 後にテスト再実行 (Fixture が自動で再作成)</td>
+</tr>
+<tr>
+<td>Playwright の <code>Process exited</code> 失敗</td>
+<td><code>Microsoft.Playwright</code> パッケージのバージョン (現在 1.55.0) を確認</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="既知の制約" class="level2">
+<h2>7. 既知の制約</h2>
+<ul>
+<li><strong>PowerShell 7 が無い場合</strong>: Windows PowerShell 5.1 では <code>playwright.ps1</code> がアクセス違反で失敗するため、<code>dotnet exec</code> で直接 Microsoft.Playwright.dll を叩く必要がある (上記セットアップ参照)。</li>
+</ul>
+</section>
+</section>
+</body>
+</html>

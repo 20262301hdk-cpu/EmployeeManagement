@@ -1,0 +1,25 @@
+@model EmployeeFormViewModel
+@{
+    ViewData["Title"] = "社員登録 - 確認";
+}
+<h2>社員登録 - 確認</h2>
+<p>以下の内容で登録します。</p>
+
+@* TODO: T-14 [課題] 確認表示テーブル [Tag: @Model.* / 性別 1-2 → 男・女]
+   → 詳細設計書 §12.2.2 / §13.1 *@
+<table class="simple-table">
+    <tbody>
+        <tr><th>氏名</th><td></td></tr>
+        <tr><th>メールアドレス</th><td></td></tr>
+        <tr><th>性別</th><td></td></tr>
+        <tr><th>住所</th><td></td></tr>
+        <tr><th>生年月日</th><td></td></tr>
+        <tr><th>ロール</th><td></td></tr>
+        <tr><th>部署</th><td></td></tr>
+    </tbody>
+</table>
+
+@* TODO: T-14 [課題] 戻る/登録フォーム [Tag: asp-action / hidden name="back" value="true"]
+   → 詳細設計書 §12.2.2 / §13.1 *@
+<div class="button-row">
+</div>

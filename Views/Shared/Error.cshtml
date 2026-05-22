@@ -1,0 +1,11 @@
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "エラー";
+}
+<h2>エラー</h2>
+<div class="alert alert-danger">エラーが発生しました。</div>
+@if (Model.ShowRequestId)
+{
+    <p><strong>Request ID:</strong> <code>@Model.RequestId</code></p>
+}
+<p>詳細はシステム管理者に連絡してください。</p>

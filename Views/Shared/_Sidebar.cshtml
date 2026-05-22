@@ -1,0 +1,7 @@
+<ul>
+    <li><a asp-controller="Home" asp-action="Index">ホーム</a></li>
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <li><a asp-controller="Employees" asp-action="Index">社員一覧</a></li>
+    }
+</ul>

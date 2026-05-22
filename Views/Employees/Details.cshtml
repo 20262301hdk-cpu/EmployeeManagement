@@ -1,0 +1,19 @@
+@model EmployeeRowViewModel
+<!-- 事前実装 (削減版): T-14 社員詳細表示 -->
+@{
+    ViewData["Title"] = "社員詳細";
+}
+<h2>社員詳細</h2>
+<table class="simple-table">
+    <tbody>
+        <tr><th>社員ID</th><td>@Model.EmpId</td></tr>
+        <tr><th>氏名</th><td>@Model.EmpName</td></tr>
+        <tr><th>メールアドレス</th><td>@Model.Email</td></tr>
+        <tr><th>性別</th><td>@Model.GenderText</td></tr>
+        <tr><th>住所</th><td>@Model.Address</td></tr>
+        <tr><th>生年月日</th><td>@Model.Birthday.ToString("yyyy/MM/dd")</td></tr>
+        <tr><th>ロール</th><td>@Model.Role</td></tr>
+        <tr><th>部署</th><td>@Model.DeptName</td></tr>
+    </tbody>
+</table>
+<p><a class="btn-link" asp-action="Index">一覧へ戻る</a></p>

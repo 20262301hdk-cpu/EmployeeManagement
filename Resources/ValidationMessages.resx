@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <!-- TODO: T-07 / T-13 [課題] F-11 入力チェック [Resource: data 要素 + ValidationMessages.cs 同名 static プロパティを追加]
+       → 詳細設計書 §8 / §9.1 / §13.1 (既存エントリは事前実装参照のため残置) -->
+  <data name="Email_Required" xml:space="preserve"><value>メールアドレスは必須です。</value></data>
+  <data name="Email_Format" xml:space="preserve"><value>メールアドレスの形式が正しくありません。</value></data>
+  <data name="Email_Duplicate" xml:space="preserve"><value>このメールアドレスは既に登録されています。</value></data>
+  <data name="Password_Required" xml:space="preserve"><value>パスワードは必須です。</value></data>
+  <data name="Password_Policy" xml:space="preserve"><value>パスワードは英大文字・小文字・数字・記号を含めてください。</value></data>
+  <data name="Birthday_Range" xml:space="preserve"><value>生年月日は 1900/01/01 から 2100/12/31 の範囲で入力してください。</value></data>
+  <data name="DeptName_Required" xml:space="preserve"><value>部署名は必須です。</value></data>
+  <data name="DeptName_Length" xml:space="preserve"><value>部署名は 15 文字以内で入力してください。</value></data>
+  <data name="Login_Failed" xml:space="preserve"><value>メールアドレスまたはパスワードが正しくありません。</value></data>
+</root>
