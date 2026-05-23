@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
+
 namespace EmployeeManagement.ViewModels;
 
 // TODO: T-07 / T-13 [課題] F-11 入力チェック [API: [Required] / [StringLength] / [EmailAddress] / [Compare] / [Range] / [RegularExpression] / [DataType] / ErrorMessageResourceType / ErrorMessageResourceName]
@@ -11,17 +12,26 @@ public class EmployeeFormViewModel
     public int? EmpId { get; set; }
 
     [Display(Name = "メール")]
+    [Required(ErrorMessage = "メールアドレスは必ず入力してください。")]
+    [StringLength(256, ErrorMessage = "{0}は{1}文字以内で入力してください。")]
+    [EmailAddress]
     public string Email { get; set; } = string.Empty;
 
     [DataType(DataType.Password)]
     [Display(Name = "パスワード")]
+    [Required(ErrorMessage = "パスワードは必ず入力してください。")]
+    [StringLength(100, ErrorMessage = "{0}は{1}文字以内で入力してください。")]
     public string? Password { get; set; }
 
     [DataType(DataType.Password)]
     [Display(Name = "パスワード確認")]
-    public string? ConfirmPassword { get; set; }
+    [Compare(nameof(Password))]
+    public string? ConfirmPassword
+    { get; set;}
 
     [Display(Name = "氏名")]
+    [Required(ErrorMessage ="氏名は必ず入力してください。")]
+    [StringLength(30, ErrorMessage = "{0}は{1}文字以内で入力してください。")]
     public string EmpName { get; set; } = string.Empty;
 
     [Display(Name = "性別")]
