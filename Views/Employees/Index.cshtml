@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "社員一覧";
 }
-<h2>社員一覧</h2>
+<h2>@ViewData["Title"]</h2>
 
 @* 事前実装: チャレンジ未実装機能 (編集/削除) を実行した際の案内メッセージ表示 *@
 @if (TempData["ChallengeMessage"] is string challengeMessage && !string.IsNullOrEmpty(challengeMessage))
@@ -16,9 +16,10 @@
 @* TODO: T-14 [課題] 検索フォーム [Tag: asp-action / asp-for]
    T-14C [チャレンジ] 部署ドロップダウン [Tag: asp-items]
    → 詳細設計書 §12.2.2 / §13.1 / §13.2 *@
-<form method="get" action="#" class="search-form">
+<form method="get" asp-action="Index" class="search-form">
     <div>
-        <label>氏名</label>
+        <label asp-for="EmpName"></label>
+        <input asp-for="EmpName"/>
     </div>
     <div>
         <input type="hidden" name="page" value="1" />
@@ -41,6 +42,7 @@
         </tr>
     </thead>
     <tbody>
+
     </tbody>
 </table>
 
