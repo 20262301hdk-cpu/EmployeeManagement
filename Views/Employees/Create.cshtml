@@ -7,7 +7,7 @@
 
 @* TODO: T-13 [課題] 新規登録の入力フォーム [Tag: asp-action / asp-validation-summary / asp-for / asp-validation-for / asp-items]
    → 詳細設計書 §12.2.1 / §13.1 *@
-<form asp-controller="Employees" asp-action="Index" method="post">
+<form asp-controller="Employees" asp-action="CreateConfirm" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div>
         @*<label>氏名</label>*@
@@ -35,9 +35,9 @@
     </div>
     <div>
         @*<label>性別</label>*@
-        <label asp-for="Gender"></label><br />
-        <input type="radio" asp-for="Gender" value="男性" /> 男
-        <br /><input type="radio" asp-for="Gender" value="女性" /> 女
+        <label asp-for="Gender"></label>
+        <input type="radio" asp-for="Gender" value="1" /> 男
+        <br /><input type="radio" asp-for="Gender" value="2" /> 女
         <span asp-validation-for="Gender" class="text-danger"></span>
     </div>
     <div>
@@ -68,8 +68,9 @@
         <span asp-validation-for="DeptId" class="text-danger"></span>
     </div>
     <div class="button-row">
-        <button type="submit">確認</button>
-        <button type="submit">キャンセル</button>
+        <button type="submit" class="btn btn-primary">確認</button>
+        <a asp-controller="Employees" asp-action="Index"
+           class="btn btn-secondary">キャンセル </a>
     </div>
 </form>
 @section Scripts {

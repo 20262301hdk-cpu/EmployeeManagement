@@ -11,47 +11,56 @@ public class EmployeeFormViewModel
 {
     public int? EmpId { get; set; }
 
-    [Display(Name = "メール")]
     [Required(ErrorMessage = "メールアドレスは必ず入力してください。")]
-    [StringLength(256, ErrorMessage = "{0}は{1}文字以内で入力してください。")]
+    [StringLength(256)]
+    [Display(Name = "メール")]
     [EmailAddress]
     public string Email { get; set; } = string.Empty;
 
+    [Required(ErrorMessage = "パスワードは必ず入力してください。")]
+    [StringLength(100)]
     [DataType(DataType.Password)]
     [Display(Name = "パスワード")]
-    [Required(ErrorMessage = "パスワードは必ず入力してください。")]
-    [StringLength(100, ErrorMessage = "{0}は{1}文字以内で入力してください。")]
-    public string? Password { get; set; }
+    public string? Password { get; set; } = string.Empty;
 
+    [Required(ErrorMessage = "パスワードが一致しません")]
+    [StringLength(100)]
     [DataType(DataType.Password)]
-    [Display(Name = "パスワード確認")]
     [Compare(nameof(Password))]
-    public string? ConfirmPassword
-    { get; set;}
+    [Display(Name = "パスワード確認")]
+    public string ConfirmPassword { get; set; } = string.Empty;
+
 
     [Display(Name = "氏名")]
     [Required(ErrorMessage ="氏名は必ず入力してください。")]
-    [StringLength(30, ErrorMessage = "{0}は{1}文字以内で入力してください。")]
+    [StringLength(30)]
     public string EmpName { get; set; } = string.Empty;
 
     [Display(Name = "性別")]
+    [Required(ErrorMessage = "性別を選択してください")]
+    [Range(1, 2)]
     public int Gender { get; set; } = 1;
 
+    [Required(ErrorMessage = "住所は必ず入力してください。")]
+    [StringLength(60)]
     [Display(Name = "住所")]
     public string Address { get; set; } = string.Empty;
 
-    [DataType(DataType.Date)]
+    [Required, DataType(DataType.Date, ErrorMessage = "生年月日を選択してください。")]
     [Display(Name = "生年月日")]
     public DateTime Birthday { get; set; }
 
+    [Required]
     [Display(Name = "ロール")]
-    public string Role { get; set; } = "User";
+    public string? Role { get; set; } = "User";
 
+    [Required(ErrorMessage = "部署を選択してください。")]
     [Display(Name = "部署")]
     public int DeptId { get; set; }
 
     [JsonIgnore]
-    public IEnumerable<SelectListItem> Departments { get; set; } = Enumerable.Empty<SelectListItem>();
+    public IEnumerable<SelectListItem> Departments { get; set; } 
+            = Enumerable.Empty<SelectListItem>();
 
     public bool IsEdit { get; set; }
     public string DeptName { get; set; } = string.Empty;
