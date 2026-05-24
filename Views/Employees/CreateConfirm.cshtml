@@ -43,15 +43,15 @@
 @* TODO: T-14 [課題] 戻る/登録フォーム [Tag: asp-action / hidden name="back" value="true"]
    → 詳細設計書 §12.2.2 / §13.1 *@
     <div class="button-row">
-        <button type="submit">
-            登録
-        </button>
-
         <button type="submit"
                 formaction="@Url.Action("Create")"
                 name="back"
                 value="true">
             戻る
         </button>
+        <button type="submit">
+            登録
+        </button>
+
     </div>
 </form>

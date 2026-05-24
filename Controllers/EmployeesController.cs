@@ -111,8 +111,9 @@ public class EmployeesController : Controller
     {
         // TODO: T-07 [課題] [API: TempData / ModelState.IsValid / RedirectToAction / BuildDepartmentSelectListAsync]
         //        → 詳細設計書 §7.2 / §13.1
-        await Task.CompletedTask;
-        throw new NotImplementedException();
+        await SetDepartmentNameAsync(vm);
+
+        return View("CreateConfirm", vm);
     }
 
     [Authorize(Roles = "Admin")]
