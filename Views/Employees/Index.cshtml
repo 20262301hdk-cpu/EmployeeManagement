@@ -42,7 +42,23 @@
         </tr>
     </thead>
     <tbody>
+        @foreach(var item in Model.Items)
+        {
+            <tr>
+                <td>@item.EmpId</td>
+                <td>@item.EmpName</td>
+                <td>@(item.Gender == 1 ? "男" : "女")</td>
+                <td>@item.Birthday.ToString("yyyy/MM/dd")</td>
+                <td>@item.DeptName</td>
 
+                <td>
+                    <a asp-action="Details"
+                       asp-route-id="@item.EmpId">
+                        詳細
+                    </a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 

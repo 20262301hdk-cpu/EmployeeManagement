@@ -9,17 +9,49 @@
    → 詳細設計書 §12.2.2 / §13.1 *@
 <table class="simple-table">
     <tbody>
-        <tr><th>氏名</th><td></td></tr>
-        <tr><th>メールアドレス</th><td></td></tr>
-        <tr><th>性別</th><td></td></tr>
-        <tr><th>住所</th><td></td></tr>
-        <tr><th>生年月日</th><td></td></tr>
-        <tr><th>ロール</th><td></td></tr>
-        <tr><th>部署</th><td></td></tr>
+        <tr><th>氏名</th>
+            <td>@Model.EmpName</td></tr>
+        <tr><th>メールアドレス</th>
+            <td>@Model.Email</td></tr>
+        <tr><th>性別</th>
+            <td>@(Model.Gender == 1 ? "男" : "女")</td>
+        <tr><th>住所</th>
+            <td>@Model.Address</td></tr>
+        <tr><th>生年月日</th>
+            <td>@Model.Birthday.ToString("yyyy/MM/dd")</td>
+        <tr><th>ロール</th>
+            <td>@Model.Role</td></tr>
+        <tr><th>部署</th>
+            <td>@Model.DeptName</td></tr>
     </tbody>
 </table>
 
+<form asp-action="CreateComplete" method="post">
+
+    <input type="hidden" asp-for="EmpName" />
+    <input type="hidden" asp-for="Email" />
+    <input type="hidden" asp-for="Password" />
+    <input type="hidden" asp-for="ConfirmPassword" />
+    <input type="hidden" asp-for="Gender" />
+    <input type="hidden" asp-for="Address" />
+    <input type="hidden" asp-for="Birthday" />
+    <input type="hidden" asp-for="Role" />
+    <input type="hidden" asp-for="DeptId" />
+    <input type="hidden" asp-for="DeptName" />
+
+
 @* TODO: T-14 [課題] 戻る/登録フォーム [Tag: asp-action / hidden name="back" value="true"]
    → 詳細設計書 §12.2.2 / §13.1 *@
-<div class="button-row">
-</div>
+    <div class="button-row">
+        <button type="submit">
+            登録
+        </button>
+
+        <button type="submit"
+                formaction="@Url.Action("Create")"
+                name="back"
+                value="true">
+            戻る
+        </button>
+    </div>
+</form>
