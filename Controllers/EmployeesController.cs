@@ -166,8 +166,55 @@ public class EmployeesController : Controller
     {
         // TODO: T-08 [課題] [API: TempData / UserManager.CreateAsync / UserManager.AddToRoleAsync / Employees.Add / SaveChangesAsync / ViewBag]
         //        → 詳細設計書 §7.2 / §13.1
-        await Task.CompletedTask;
-        throw new NotImplementedException();
+        // TempDataから復元
+        var vm = ReadFormFromTempData(keep: false);
+
+        if (vm is null)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        // IdentityUser作成
+        var user = new IdentityUser
+        {
+            UserName = vm.Email,
+            Email = vm.Email
+        };
+
+        var result = await _userManager.CreateAsync(user, vm.Password!);
+
+        // ユーザー作成失敗時
+        if (!result.Succeeded)
+        {
+            AddIdentityErrors(result);
+
+            vm.Departments = await BuildDepartmentSelectListAsync(false, vm.DeptId);
+
+            return View("Create", vm);
+        }
+
+        // ロール付与
+        await _userManager.AddToRoleAsync(user, vm.Role!);
+
+        // Employeeテーブル登録
+        var employee = new Employee
+        {
+            AspNetUserId = user.Id,
+            EmpName = vm.EmpName,
+            Gender = vm.Gender,
+            Address = vm.Address,
+            Birthday = vm.Birthday,
+            DeptId = vm.DeptId
+        };
+
+        _db.Employees.Add(employee);
+
+        await _db.SaveChangesAsync();
+
+        // 新規社員IDをViewBagへ
+        ViewBag.EmpId = employee.EmpId;
+
+        return View();
     }
 
     [Authorize(Roles = "Admin")]
