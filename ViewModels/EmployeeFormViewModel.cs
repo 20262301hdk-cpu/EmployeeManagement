@@ -11,7 +11,7 @@ public class EmployeeFormViewModel
 {
     public int? EmpId { get; set; }
 
-    [Required(ErrorMessage = "メールアドレスは必ず入力してください。")]
+    [Required(ErrorMessage = "メールアドレスは必須です。")]
     [StringLength(256)]
     [Display(Name = "メール")]
     [EmailAddress]
@@ -23,7 +23,7 @@ public class EmployeeFormViewModel
     [Display(Name = "パスワード")]
     public string? Password { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "パスワードが一致しません")]
+    [Required(ErrorMessage = "パスワードと確認用パスワードが一致しません")]
     [StringLength(100)]
     [DataType(DataType.Password)]
     [Compare(nameof(Password))]
@@ -32,7 +32,7 @@ public class EmployeeFormViewModel
 
 
     [Display(Name = "氏名")]
-    [Required(ErrorMessage ="氏名は必ず入力してください。")]
+    [Required(ErrorMessage ="氏名は必須です。")]
     [StringLength(30)]
     public string EmpName { get; set; } = string.Empty;
 
@@ -46,7 +46,7 @@ public class EmployeeFormViewModel
     [Display(Name = "住所")]
     public string Address { get; set; } = string.Empty;
 
-    [Required, DataType(DataType.Date, ErrorMessage = "生年月日を選択してください。")]
+    [Required, DataType(DataType.Date, ErrorMessage = "生年月日は必須です。")]
     [Display(Name = "生年月日")]
     public DateTime Birthday { get; set; }
 

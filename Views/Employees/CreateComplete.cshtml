@@ -1,8 +1,14 @@
+@using EmployeeManagement.ViewModels
 @{
     ViewData["Title"] = "社員登録 - 完了";
 }
-<h2>社員登録 - 完了</h2>
+<h2>@ViewData["Title"]</h2>
 <div class="alert alert-success">社員情報を登録しました。</div>
 
 @* TODO: T-14 [課題] 完了表示 [Tag: ViewBag.EmpId / asp-action]
    → 詳細設計書 §12.2.2 / §13.1 *@
+@* ViewBag.EmpId 表示 + 一覧へのリンク（asp-action="Index"）*@
+<p>@Model.UserName さんの登録が完了しました。</p>
+<p>
+    <a asp-action="Index" class="btn btn-primary">新規登録に戻る</a>
+</p>

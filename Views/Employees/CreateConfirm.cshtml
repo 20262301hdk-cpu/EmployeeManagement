@@ -14,7 +14,7 @@
         <tr><th>メールアドレス</th>
             <td>@Model.Email</td></tr>
         <tr><th>性別</th>
-            <td>@(Model.Gender == 1 ? "男" : "女")</td>
+            <td>@(Model.Gender == 1 ? "男" : "女")</td></tr>
         <tr><th>住所</th>
             <td>@Model.Address</td></tr>
         <tr><th>生年月日</th>
@@ -38,20 +38,19 @@
     <input type="hidden" asp-for="Role" />
     <input type="hidden" asp-for="DeptId" />
     <input type="hidden" asp-for="DeptName" />
+</form>
 
 
 @* TODO: T-14 [課題] 戻る/登録フォーム [Tag: asp-action / hidden name="back" value="true"]
    → 詳細設計書 §12.2.2 / §13.1 *@
     <div class="button-row">
-        <button type="submit"
-                formaction="@Url.Action("Create")"
-                name="back"
-                value="true">
-            戻る
-        </button>
-        <button type="submit">
-            登録
-        </button>
+     <form asp-action="Create" method="get">
+         <input type="hidden" name="back" value="true">
+         <button type ="submit">戻る</button>
+     </form>
+    <form asp-action="CreateComplete" method="post">
+        <input type="hidden" name="create" value="true">
+        <button type="submit"> 登録</button>
+        </form>
 
     </div>
-</form>
