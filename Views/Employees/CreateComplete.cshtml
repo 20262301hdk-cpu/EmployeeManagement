@@ -8,7 +8,7 @@
 @* TODO: T-14 [課題] 完了表示 [Tag: ViewBag.EmpId / asp-action]
    → 詳細設計書 §12.2.2 / §13.1 *@
 @* ViewBag.EmpId 表示 + 一覧へのリンク（asp-action="Index"）*@
-<p>@Model.UserName さんの登録が完了しました。</p>
+<p>社員ID：@ViewBag.EmpId</p>
 <p>
     <a asp-action="Index" class="btn btn-primary">新規登録に戻る</a>
 </p>

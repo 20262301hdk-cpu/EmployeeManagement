@@ -116,9 +116,34 @@ public class EmployeesController : Controller
     {
         // TODO: T-07 [課題] [API: TempData / ModelState.IsValid / RedirectToAction / BuildDepartmentSelectListAsync]
         //        → 詳細設計書 §7.2 / §13.1
+        if(back)
+        {
+            vm.Departments = await BuildDepartmentSelectListAsync(false, vm.DeptId);
+            return View(vm);
+
+        }
+        // 入力チェック
+        ValidateCreatePassword(vm);
+
+        ValidateBirthdayRange(vm);
+
+        await ValidateEmailDuplicateAsync(vm.Email);
+        // エラー時
+        if (!ModelState.IsValid)
+        {
+            vm.Departments = await BuildDepartmentSelectListAsync(false, vm.DeptId);
+
+            return View(vm);
+        }
+
+        // 部署名設定
         await SetDepartmentNameAsync(vm);
 
-        return View("CreateConfirm", vm);
+        // TempData保存
+        SaveFormToTempData(vm);
+
+        // 確認画面へ
+        return RedirectToAction(nameof(CreateConfirm));
     }
 
     [Authorize(Roles = "Admin")]
