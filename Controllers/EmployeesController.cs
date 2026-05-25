@@ -37,6 +37,11 @@ public class EmployeesController : Controller
 
         // TODO: T-06 [課題] [API: Where / string.Contains]
         //        → 詳細設計書 §7.2 / §13.1
+        if (!string.IsNullOrWhiteSpace(empName))
+        {
+            query = query.Where(e => e.EmpName.Contains(empName));
+        }
+
 
         // TODO: T-06C [チャレンジ] [API: Where / int?.HasValue / int?.Value]
         //        → 詳細設計書 §7.2 / §13.2
