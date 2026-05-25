@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using X.PagedList;
 
 namespace EmployeeManagement.ViewModels;
 
 public class EmployeeListViewModel
 {
+    [Display(Name = "氏名")]
     public string? EmpName { get; set; }
     public int? DeptId { get; set; }
     public int Page { get; set; } = 1;

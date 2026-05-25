@@ -36,8 +36,8 @@
     <div>
         @*<label>性別</label>*@
         <label asp-for="Gender"></label>
-        <input type="radio" asp-for="Gender" value="1" /> 男
-        <br /><input type="radio" asp-for="Gender" value="2" /> 女
+        <input type="radio" asp-for="Gender" value="1" /> 男<br />
+        <input type="radio" asp-for="Gender" value="2" /> 女
         <span asp-validation-for="Gender" class="text-danger"></span>
     </div>
     <div>
@@ -55,15 +55,14 @@
     <div>
         @*<label>ロール</label>*@
         <label asp-for="Role"></label>
-        <input type="radio" asp-for="Role" value="User" /> User
-        <br /><input type="radio" asp-for="Role" value="Admin" /> Admin
+        <input type="radio" asp-for="Role" value="User" /> User<br />
+        <input type="radio" asp-for="Role" value="Admin" /> Admin
         <span asp-validation-for="Role" class="text-danger"></span>
     </div>
     <div>
         @*<label>部署</label>*@
         <label asp-for="DeptId"></label>
         <select asp-for="DeptId" asp-items="Model.Departments">
-            <option value="">-- 選択してください --</option>
         </select>
         <span asp-validation-for="DeptId" class="text-danger"></span>
     </div>

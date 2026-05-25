@@ -18,15 +18,15 @@ public class EmployeeFormViewModel
     public string Email { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "パスワードは必ず入力してください。")]
-    [StringLength(100)]
+    [StringLength(100, MinimumLength = 8,ErrorMessage = "パスワードは8文字以上100文字以下で入力してください。")]
     [DataType(DataType.Password)]
     [Display(Name = "パスワード")]
     public string? Password { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "パスワードと確認用パスワードが一致しません")]
-    [StringLength(100)]
+    [Required(ErrorMessage = "確認用パスワードは必須です。")]
+    [StringLength(100, MinimumLength = 8, ErrorMessage = "パスワードは8文字以上100文字以下で入力してください。")]
     [DataType(DataType.Password)]
-    [Compare(nameof(Password))]
+    [Compare(nameof(Password), ErrorMessage = "パスワードと確認用パスワードが一致しません。")]
     [Display(Name = "パスワード確認")]
     public string ConfirmPassword { get; set; } = string.Empty;
 
@@ -38,7 +38,7 @@ public class EmployeeFormViewModel
 
     [Display(Name = "性別")]
     [Required(ErrorMessage = "性別を選択してください")]
-    [Range(1, 2)]
+    [Range(1, 2, ErrorMessage = "性別を選択してください")]
     public int Gender { get; set; } = 1;
 
     [Required(ErrorMessage = "住所は必ず入力してください。")]
@@ -46,15 +46,17 @@ public class EmployeeFormViewModel
     [Display(Name = "住所")]
     public string Address { get; set; } = string.Empty;
 
-    [Required, DataType(DataType.Date, ErrorMessage = "生年月日は必須です。")]
+    [Required(ErrorMessage = "生年月日は必須です。")]
+    [DataType(DataType.Date)]
     [Display(Name = "生年月日")]
     public DateTime Birthday { get; set; }
 
-    [Required]
+    [Required(ErrorMessage ="ロールを選択してください。")]
     [Display(Name = "ロール")]
     public string? Role { get; set; } = "User";
 
     [Required(ErrorMessage = "部署を選択してください。")]
+    [Range(1, int.MaxValue, ErrorMessage = "部署を選択してください。")]
     [Display(Name = "部署")]
     public int DeptId { get; set; }
 
