@@ -16,40 +16,72 @@
    → 詳細設計書 §12.2.1 / §13.2
    下記ブロックを解除して実装する。
 *@
-<form method="post" action="#">
+<form asp-action="Edit" asp-route-id="@Model.EmpId" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="EmpId" />
     <div>
         <label>社員ID</label>
+        <span>@Model.EmpId</span>
     </div>
     <div>
-        <label>氏名</label>
+        @*<label>氏名</label>*@
+        <label asp-for="EmpName"></label>
+        <input asp-for="EmpName" />
+        <span asp-validation-for="EmpName" class="text-danger"></span>
     </div>
     <div>
-        <label>メールアドレス</label>
+        @*<label>メールアドレス</label>*@
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div>
-        <label>パスワード</label>
-        <small>空欄なら変更しません。</small>
+        <label asp-for="Password"></label>
+        <small>空欄なら変更しません。</small><br />
+        <input asp-for="Password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="ConfirmPassword"></label>
+        <input asp-for="ConfirmPassword" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
     </div>
     <div>
-        <label>パスワード確認</label>
+        @*<label>性別</label>*@
+        <label asp-for="Gender"></label>
+        <input type="radio" asp-for="Gender" value="1" /> 男<br />
+        <input type="radio" asp-for="Gender" value="2" /> 女
+        <span asp-validation-for="Gender" class="text-danger"></span>
     </div>
     <div>
-        <label>性別</label>
+        @*<label>住所</label>*@
+        <label asp-for="Address"></label>
+        <input asp-for="Address" />
+        <span asp-validation-for="Address" class="text-danger"></span>
     </div>
     <div>
-        <label>住所</label>
+        @*<label>生年月日</label>*@
+        <label asp-for="Birthday"></label>
+        <input asp-for="Birthday" type="date" />
+        <span asp-validation-for="Birthday" class="text-danger"></span>
     </div>
     <div>
-        <label>生年月日</label>
+        @*<label>ロール</label>*@
+        <label asp-for="Role"></label>
+        <input type="radio" asp-for="Role" value="User" /> User<br />
+        <input type="radio" asp-for="Role" value="Admin" /> Admin
+        <span asp-validation-for="Role" class="text-danger"></span>
     </div>
     <div>
-        <label>ロール</label>
-    </div>
-    <div>
-        <label>部署</label>
+        @*<label>部署</label>*@
+        <label asp-for="DeptId"></label>
+        <select asp-for="DeptId" asp-items="Model.Departments"></select>
+        <span asp-validation-for="DeptId" class="text-danger"></span>
     </div>
     <div class="button-row">
         <button type="submit">確認</button>
+        <button type="submit">キャンセル</button>
     </div>
 </form>
 @section Scripts {

@@ -62,8 +62,7 @@
     <div>
         @*<label>部署</label>*@
         <label asp-for="DeptId"></label>
-        <select asp-for="DeptId" asp-items="Model.Departments">
-        </select>
+        <select asp-for="DeptId" asp-items="Model.Departments"></select>
         <span asp-validation-for="DeptId" class="text-danger"></span>
     </div>
     <div class="button-row">
