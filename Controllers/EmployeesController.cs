@@ -321,10 +321,68 @@ public class EmployeesController : Controller
     {
         // TODO: T-09C [チャレンジ] [API: UserManager.UpdateAsync / GeneratePasswordResetTokenAsync / ResetPasswordAsync / RemoveFromRolesAsync / AddToRoleAsync / SaveChangesAsync]
         //        → 詳細設計書 §7.2 / §13.2
-        // 暫定 (チャレンジ未実装時): 一覧へ戻りつつ TempData にメッセージを残す
-        await Task.CompletedTask;
-        TempData["ChallengeMessage"] = "社員編集の完了処理 (T-09C) はチャレンジ課題です。EmployeesController.cs を実装してください。";
-        return RedirectToAction(nameof(Index));
+        // TempData から復元
+        var vm = ReadFormFromTempData(keep: false);
+        if (vm is null)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+        // DBから既存の社員データを取得（関連するAspNetUserもIncludeする）
+        var employee = await _db.Employees
+            .Include(e => e.AspNetUser)
+            .FirstOrDefaultAsync(e => e.EmpId == vm.EmpId);
+
+        if (employee is null || employee.AspNetUser is null)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        // --- 1. IdentityUserの更新（メールアドレス） ---
+        employee.AspNetUser.UserName = vm.Email;
+        employee.AspNetUser.Email = vm.Email;
+        var userResult = await _userManager.UpdateAsync(employee.AspNetUser);
+        if (!userResult.Succeeded)
+        {
+            AddIdentityErrors(userResult);
+            vm.Departments = await BuildDepartmentSelectListAsync(false, vm.DeptId);
+            return View("Edit", vm);
+        }
+
+        // --- 2. パスワードの変更（入力がある場合のみ） ---
+        if (!string.IsNullOrWhiteSpace(vm.Password))
+        {
+            // 管理者権限で強制的にリセット・再設定するパターン
+            var token = await _userManager.GeneratePasswordResetTokenAsync(employee.AspNetUser);
+            var passResult = await _userManager.ResetPasswordAsync(employee.AspNetUser, token, vm.Password);
+            if (!passResult.Succeeded)
+            {
+                AddIdentityErrors(passResult);
+                vm.Departments = await BuildDepartmentSelectListAsync(false, vm.DeptId);
+                return View("Edit", vm);
+            }
+        }
+
+        // --- 3. ロールの更新 ---
+        var currentRoles = await _userManager.GetRolesAsync(employee.AspNetUser);
+        if (!currentRoles.Contains(vm.Role))
+        {
+            // 既存のロールを一度削除して、新しいロールを付与
+            await _userManager.RemoveFromRolesAsync(employee.AspNetUser, currentRoles);
+            await _userManager.AddToRoleAsync(employee.AspNetUser, vm.Role!);
+        }
+
+        // --- 4. Employeeテーブルの更新 ---
+        employee.EmpName = vm.EmpName;
+        employee.Gender = vm.Gender;
+        employee.Address = vm.Address;
+        employee.Birthday = vm.Birthday;
+        employee.DeptId = vm.DeptId;
+
+        await _db.SaveChangesAsync();
+
+        // 編集された社員IDをViewBagへ渡して完了画面を表示
+        ViewBag.EmpId = employee.EmpId;
+        return View();
     }
 
     [Authorize(Roles = "Admin")]
@@ -347,11 +405,34 @@ public class EmployeesController : Controller
     {
         // TODO: T-09C [チャレンジ] [API: Employees.Include / Employees.Remove / SaveChangesAsync / UserManager.DeleteAsync]
         //        → 詳細設計書 §7.2 / §13.2
-        // 暫定 (チャレンジ未実装時): 一覧へ戻りつつ TempData にメッセージを残す
-        await Task.CompletedTask;
-        TempData["ChallengeMessage"] = "社員削除 (T-09C) はチャレンジ課題です。EmployeesController.cs を実装してください。";
+        // 削除対象の社員データを取得
+        var employee = await _db.Employees
+         .Include(e => e.AspNetUser)
+         .FirstOrDefaultAsync(e => e.EmpId == id);
+        if (employee is null)
+        {
+            return NotFound();
+        }
+        // 先に Employee レコードを削除（外部キー制約の順序を考慮）
+        var user = employee.AspNetUser;
+        _db.Employees.Remove(employee);
+        await _db.SaveChangesAsync();
+
+        // 次に IdentityUser を削除
+        if (user is not null)
+        {
+            var result = await _userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+                // 必要に応じてエラー処理を追加
+                ModelState.AddModelError(string.Empty, "ユーザーの削除に失敗しました。");
+                return RedirectToAction(nameof(Index));
+            }
+        }
+        // 削除が完了したら一覧画面へ遷移
         return RedirectToAction(nameof(Index));
     }
+    
 
     private async Task<EmployeeFormViewModel?> BuildEditFormAsync(int id)
     {
