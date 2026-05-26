@@ -49,7 +49,7 @@
     <div>
         @*<label>生年月日</label>*@
         <label asp-for="Birthday"></label>
-        <input asp-for="Birthday" type="date"/>
+        <input asp-for="Birthday" type="date" value="@birthdayValue" />
         <span asp-validation-for="Birthday" class="text-danger"></span>
     </div>
     <div>
@@ -67,8 +67,7 @@
     </div>
     <div class="button-row">
         <button type="submit" class="btn btn-primary">確認</button>
-        <a asp-controller="Employees" asp-action="Index"
-           class="btn btn-secondary">キャンセル </a>
+        <a class="btn-link" href="/Employees">キャンセル</a>
     </div>
 </form>
 @section Scripts {
