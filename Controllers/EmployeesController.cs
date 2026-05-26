@@ -116,6 +116,7 @@ public class EmployeesController : Controller
     {
         // TODO: T-07 [課題] [API: TempData / ModelState.IsValid / RedirectToAction / BuildDepartmentSelectListAsync]
         //        → 詳細設計書 §7.2 / §13.1
+        ValidateBirthdayRange(vm);
         if(back)
         {
             vm.Departments = await BuildDepartmentSelectListAsync(false, vm.DeptId);

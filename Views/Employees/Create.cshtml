@@ -1,6 +1,6 @@
 @model EmployeeFormViewModel
 @{
-    ViewData["Title"] = "社員登録";
+    ViewData["Title"] = "社員登録-入力";
     var birthdayValue = Model.Birthday == default ? "" : Model.Birthday.ToString("yyyy-MM-dd");
 }
 <h2>@ViewData["Title"]</h2>
@@ -49,7 +49,7 @@
     <div>
         @*<label>生年月日</label>*@
         <label asp-for="Birthday"></label>
-        <input asp-for="Birthday" type="date" value="@Model.Birthday" />
+        <input asp-for="Birthday" type="date" value="@birthdayValue" />
         <span asp-validation-for="Birthday" class="text-danger"></span>
     </div>
     <div>

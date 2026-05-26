@@ -15,7 +15,8 @@
 @if (User.IsInRole("Admin"))
 {
     <p>
-        <a asp-action="Create" class=" btn btn-light border border-dark fw-bold px-3 py-2">新規登録</a>
+        <a class="btn-link" href="Employees/Create">新規登録</a>
+        @*<a asp-action="Create" class=" btn btn-light border border-dark fw-bold px-3 py-2">新規登録</a>*@
     </p>
 }
 

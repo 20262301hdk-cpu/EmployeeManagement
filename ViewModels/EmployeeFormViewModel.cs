@@ -47,7 +47,7 @@ public class EmployeeFormViewModel
 
     [Required(ErrorMessage = "生年月日は必須です。")]
     [DataType(DataType.Date)]
-    [Range(typeof(DateTime), "1900-01-01", "2100-12-31", ErrorMessage = "生年月日は1900/01/01から2100/12/31の範囲で入力してください。")]
+    //[Range(typeof(DateTime), "1900/01/01", "2100/12/31", ErrorMessage = "生年月日は1900/01/01から2100/12/31の範囲で入力してください。")]
     [Display(Name = "生年月日")]
     public DateTime Birthday { get; set; }
 
