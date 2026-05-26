@@ -8,6 +8,7 @@ public class EmployeeListViewModel
 {
     [Display(Name = "氏名")]
     public string? EmpName { get; set; }
+    [Display(Name = "部署")]
     public int? DeptId { get; set; }
     public int Page { get; set; } = 1;
     public IEnumerable<SelectListItem> Departments { get; set; } = Enumerable.Empty<SelectListItem>();
