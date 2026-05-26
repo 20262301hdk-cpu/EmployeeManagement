@@ -386,12 +386,12 @@ public class EmployeesController : Controller
         return string.IsNullOrEmpty(json) ? null : JsonSerializer.Deserialize<EmployeeFormViewModel>(json);
     }
 
-    private void ValidateCreatePassword(EmployeeFormViewModel vm)
+    private void ValidateCreatePassword(EmployeeFormViewModel vm) 
     {
-        if (string.IsNullOrWhiteSpace(vm.Password))
-        {
-
-            ModelState.AddModelError(nameof(vm.Password), ValidationMessages.Password_Required);
+        if (string.IsNullOrWhiteSpace(vm.Password)) 
+        { 
+            ModelState.AddModelError(nameof(vm.Password), 
+                ValidationMessages.Password_Required);
         }
     }
 

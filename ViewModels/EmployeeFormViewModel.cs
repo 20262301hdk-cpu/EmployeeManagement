@@ -17,7 +17,7 @@ public class EmployeeFormViewModel
     [EmailAddress(ErrorMessage = "メールアドレスの形式が正しくありません。")]
     public string Email { get; set; } = string.Empty;
 
-    
+    [Required(ErrorMessage = "パスワードは必須です。")]
     [StringLength(100, MinimumLength = 8,ErrorMessage = "パスワードは8文字以上100文字以下で入力してください。")]
     [DataType(DataType.Password)]
     [Display(Name = "パスワード")]
