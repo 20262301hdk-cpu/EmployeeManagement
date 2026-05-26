@@ -280,6 +280,7 @@ public class EmployeesController : Controller
         {
             return NotFound();
         }
+        
 
         return View(vm);
     }
@@ -320,6 +321,8 @@ public class EmployeesController : Controller
         };
     }
 
+
+
     private async Task<EmployeeRowViewModel?> BuildDetailsViewModelAsync(int id)
     {
         var employee = await _db.Employees.AsNoTracking()
@@ -334,6 +337,7 @@ public class EmployeesController : Controller
         var roles = await _userManager.GetRolesAsync(employee.AspNetUser);
         return new EmployeeRowViewModel
         {
+
             EmpId = employee.EmpId,
             EmpName = employee.EmpName,
             Email = employee.AspNetUser.Email ?? string.Empty,

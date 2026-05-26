@@ -23,7 +23,6 @@ public class EmployeeFormViewModel
     [Display(Name = "パスワード")]
     public string? Password { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "確認用パスワードは必須です。")]
     [DataType(DataType.Password)]
     [Compare(nameof(Password), ErrorMessage = "パスワードと確認用パスワードが一致しません。")]
     [Display(Name = "パスワード確認")]
