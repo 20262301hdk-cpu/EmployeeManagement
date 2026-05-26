@@ -15,8 +15,7 @@
 @if (User.IsInRole("Admin"))
 {
     <p>
-        <a class="btn-link" href="Employees/Create">新規登録</a>
-        @*<a asp-action="Create" class=" btn btn-light border border-dark fw-bold px-3 py-2">新規登録</a>*@
+        <a asp-action="Create" class="btn-link">新規登録</a>
     </p>
 }
 
@@ -86,3 +85,18 @@
 
 @* TODO: T-14C [チャレンジ] ページャ [Tag: Model.Items.PageCount / asp-route-* / HasPreviousPage / HasNextPage]
    → 詳細設計書 §12.2.2 / §13.2 *@
+
+
+@if (Model.Items.HasPreviousPage)
+{
+    <a asp-action="Index" asp-route-page="@(Model.Items.PageCount - 1)">前へ</a>
+}
+@for (int i = 1; i <= Model.Items.PageCount; i++)
+{
+    <a asp-action="Index" asp-route-page="@i">@i</a>
+}
+@if (Model.Items.HasNextPage)
+{
+    <a asp-action="Index" asp-route-page="@(Model.Items.PageNumber +1)">次へ</a>
+}
+
