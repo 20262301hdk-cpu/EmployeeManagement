@@ -19,6 +19,7 @@
 <form asp-action="Edit" asp-route-id="@Model.EmpId" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="EmpId" />
+    <input type="hidden" asp-for="IsEdit" />
     <div>
         <label>社員ID</label>
         <span>@Model.EmpId</span>
@@ -37,14 +38,14 @@
     </div>
     <div>
         <label asp-for="Password"></label>
-        <small>空欄なら変更しません。</small><br />
-        <input asp-for="Password" />
+        <input asp-for="Password" autocomplete="new-password" typeof="password" value="" /><br />
+        <small>空欄なら変更しません。</small>
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
 
     <div>
         <label asp-for="ConfirmPassword"></label>
-        <input asp-for="ConfirmPassword" />
+        <input asp-for="ConfirmPassword" autocomplete="new-password" typeof="password" value="" />
         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
     </div>
     <div>
@@ -63,7 +64,7 @@
     <div>
         @*<label>生年月日</label>*@
         <label asp-for="Birthday"></label>
-        <input asp-for="Birthday" type="date" />
+        <input asp-for="Birthday" type="date" value="@birthdayValue" />
         <span asp-validation-for="Birthday" class="text-danger"></span>
     </div>
     <div>

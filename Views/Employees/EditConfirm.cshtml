@@ -14,19 +14,45 @@
 @* TODO: T-14C [チャレンジ] 確認画面 (テーブル + 戻る/更新フォーム) [Tag: @Model.* / asp-action / asp-route-id / hidden name="back" value="true"]
    → 詳細設計書 §12.2.2 / §13.2
    下記ブロックを解除して実装する。
+*@
 <p>以下の内容で更新します。</p>
 <table class="simple-table">
     <tbody>
-        <tr><th>社員ID</th><td></td></tr>
-        <tr><th>氏名</th><td></td></tr>
-        <tr><th>メールアドレス</th><td></td></tr>
-        <tr><th>性別</th><td></td></tr>
-        <tr><th>住所</th><td></td></tr>
-        <tr><th>生年月日</th><td></td></tr>
-        <tr><th>ロール</th><td></td></tr>
-        <tr><th>部署</th><td></td></tr>
+        <tr><th>社員ID</th><td>@Model.EmpId</td></tr>
+        <tr><th>氏名</th><td>@Model.EmpName</td></tr>
+        <tr><th>メールアドレス</th><td>@Model.Email</td></tr>
+        <tr><th>性別</th><td>@(Model.Gender == 1 ? "男" : "女")</td></tr>
+        <tr><th>住所</th><td>@Model.Address</td></tr>
+        <tr><th>生年月日</th><td>@Model.Birthday.ToString("yyyy-MM-dd")</td></tr>
+        <tr><th>ロール</th><td>@Model.Role</td></tr>
+        <tr><th>部署</th><td>@Model.DeptName</td></tr>
     </tbody>
 </table>
 <div class="button-row">
+    @* --- 1. 修正する（戻る）ボタン用のフォーム --- *@
+    @* 入力画面(Edit)へPOSTで戻り、引数 back=true を渡して入力を復元させます *@
+    <form asp-action="Edit" asp-route-id="@Model.EmpId" method="post">
+        <input type="hidden" name="back" value="true" />
+
+        @* 入力された値を保持して戻すため、すべての項目を hidden で仕込みます *@
+        <input type="hidden" asp-for="EmpId" />
+        <input type="hidden" asp-for="EmpName" />
+        <input type="hidden" asp-for="Email" />
+        <input type="hidden" asp-for="Password" />
+        <input type="hidden" asp-for="ConfirmPassword" />
+        <input type="hidden" asp-for="Gender" />
+        <input type="hidden" asp-for="Address" />
+        <input type="hidden" asp-for="Birthday" />
+        <input type="hidden" asp-for="Role" />
+        <input type="hidden" asp-for="DeptId" />
+        <input type="hidden" asp-for="IsEdit" />
+
+        <button type="submit" class="btn btn-secondary">修正する</button>
+    </form>
+
+    @* --- 2. 更新ボタン用のフォーム --- *@
+    @* 最終的なDB書き換え処理(EditComplete)へデータを送信します *@
+    <form asp-action="EditComplete" method="post">
+        <button type="submit" class="btn btn-primary">更新</button>
+    </form>
 </div>
-*@

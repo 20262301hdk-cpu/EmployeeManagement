@@ -232,18 +232,74 @@ public class EmployeesController : Controller
         return View(vm);
     }
 
+    // TODO: T-09C [チャレンジ] [API: TempData / ModelState.IsValid / RedirectToAction / BuildDepartmentSelectListAsync]
+    //        → 詳細設計書 §7.2 / §13.2
+    // 暫定 (チャレンジ未実装時): 編集機能は未実装なので、一覧へ戻りつつ TempData にメッセージを残す
+    //await Task.CompletedTask;
+    //TempData["ChallengeMessage"] = "社員編集 (T-09C) はチャレンジ課題です。EmployeesController.cs を実装してください。";
+    //return RedirectToAction(nameof(Index));
     [Authorize(Roles = "Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, EmployeeFormViewModel vm, bool back = false)
     {
-        // TODO: T-09C [チャレンジ] [API: TempData / ModelState.IsValid / RedirectToAction / BuildDepartmentSelectListAsync]
-        //        → 詳細設計書 §7.2 / §13.2
-        // 暫定 (チャレンジ未実装時): 編集機能は未実装なので、一覧へ戻りつつ TempData にメッセージを残す
-        await Task.CompletedTask;
-        TempData["ChallengeMessage"] = "社員編集 (T-09C) はチャレンジ課題です。EmployeesController.cs を実装してください。";
-        return RedirectToAction(nameof(Index));
+        // 2. 戻るボタンの処理
+        if (back)
+        {
+            vm.Departments = await BuildDepartmentSelectListAsync(false, vm.DeptId);
+            return View(vm);
+        }
+
+        // 3. その他のバリデーションチェック
+        ValidateBirthdayRange(vm);
+        await ValidateEmailDuplicateAsync(vm.Email, vm.EmpId);
+        // 1. 【最優先】パスワードが空欄の場合のエラー消去処理
+        // これをメソッドの先頭に持ってくることで、[Required] の初期エラーを完全にリセットします
+        if (string.IsNullOrWhiteSpace(vm.Password))
+        {
+            // パスワードと確認用パスワードの Required / Compare エラーを強制削除
+            ModelState.Remove(nameof(vm.Password));
+            ModelState.Remove(nameof(vm.ConfirmPassword));
+
+            vm.Password = string.Empty;
+            vm.ConfirmPassword = string.Empty;
+        }
+        // パスワードが入力されている場合は、確認用パスワードとの一致チェックを行う
+        else
+        {
+            if (string.IsNullOrWhiteSpace(vm.ConfirmPassword))
+            {
+                ModelState.AddModelError(
+                    nameof(vm.ConfirmPassword),
+                    "確認用パスワードは必須です。");
+            }
+            else if (vm.Password != vm.ConfirmPassword)
+            {
+                ModelState.AddModelError(
+                    nameof(vm.ConfirmPassword),
+                    "パスワードと確認用パスワードが一致しません。");
+            }
+        }
+
+
+        // 4. エラー判定（この段階ではパスワードの不要なエラーは消えています）
+        if (!ModelState.IsValid)
+        {
+            vm.Departments = await BuildDepartmentSelectListAsync(false, vm.DeptId);
+            return View(vm);
+        }
+
+        // 5. 部署名設定と確認画面への遷移処理
+        await SetDepartmentNameAsync(vm);
+
+        // TempData保存
+        SaveFormToTempData(vm);
+
+        // 確認画面へ
+        return RedirectToAction(nameof(EditConfirm), new { id = vm.EmpId });
     }
+
+   
 
     [Authorize(Roles = "Admin")]
     [HttpGet]
@@ -384,9 +440,24 @@ public class EmployeesController : Controller
 
     private void ValidateCreatePassword(EmployeeFormViewModel vm)
     {
-        if (string.IsNullOrWhiteSpace(vm.Password))
+        // 新規登録時のみ
+        if (!vm.IsEdit)
         {
-            ModelState.AddModelError(nameof(vm.Password), ValidationMessages.Password_Required);
+            // パスワード必須
+            if (string.IsNullOrWhiteSpace(vm.Password))
+            {
+                ModelState.AddModelError(
+                    nameof(vm.Password),
+                    ValidationMessages.Password_Required);
+            }
+
+            // 確認用必須
+            if (string.IsNullOrWhiteSpace(vm.ConfirmPassword))
+            {
+                ModelState.AddModelError(
+                    nameof(vm.ConfirmPassword),
+                    "確認用パスワードは必須です。");
+            }
         }
     }
 
