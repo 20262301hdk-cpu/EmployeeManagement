@@ -390,6 +390,7 @@ public class EmployeesController : Controller
     {
         if (string.IsNullOrWhiteSpace(vm.Password))
         {
+
             ModelState.AddModelError(nameof(vm.Password), ValidationMessages.Password_Required);
         }
     }
