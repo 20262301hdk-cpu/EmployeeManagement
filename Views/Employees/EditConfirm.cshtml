@@ -48,15 +48,12 @@
         <input type="hidden" asp-for="DeptId" />
         <input type="hidden" asp-for="IsEdit" />
 
-    </form>
-
     @* --- 1. 修正する（戻る）ボタン用のフォーム --- *@
     @* 入力画面(Edit)へPOSTで戻り、引数 back=true を渡して入力を復元させます *@
     <div class="button-row">
-        <form asp-action="Edit" method="post">
-            <input type="hidden" name="back" value="true">
+        <input type="hidden" name="back" value="true">
             <button type="submit">戻る</button>
-        </form>
+    </form>
     @* --- 2. 更新ボタン用のフォーム --- *@
     @* 最終的なDB書き換え処理(EditComplete)へデータを送信します *@
     <form asp-action="EditComplete" method="post">
