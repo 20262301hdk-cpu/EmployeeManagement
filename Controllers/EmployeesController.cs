@@ -243,61 +243,31 @@ public class EmployeesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, EmployeeFormViewModel vm, bool back = false)
     {
-        // 2. 戻るボタンの処理
         if (back)
         {
             vm.Departments = await BuildDepartmentSelectListAsync(false, vm.DeptId);
             return View(vm);
         }
 
-        // 3. その他のバリデーションチェック
+        // 編集時は、パスワードが空欄ならパスワード変更なし。
+        // この場合、パスワード確認もチェックしない。
+        ValidateEditPassword(vm);
+
         ValidateBirthdayRange(vm);
         await ValidateEmailDuplicateAsync(vm.Email, vm.EmpId);
-        // 1. 【最優先】パスワードが空欄の場合のエラー消去処理
-        // これをメソッドの先頭に持ってくることで、[Required] の初期エラーを完全にリセットします
-        if (string.IsNullOrWhiteSpace(vm.Password))
-        {
-            // パスワードと確認用パスワードの Required / Compare エラーを強制削除
-            ModelState.Remove(nameof(vm.Password));
-            ModelState.Remove(nameof(vm.ConfirmPassword));
 
-            vm.Password = string.Empty;
-            vm.ConfirmPassword = string.Empty;
-        }
-        // パスワードが入力されている場合は、確認用パスワードとの一致チェックを行う
-        else
-        {
-            if (string.IsNullOrWhiteSpace(vm.ConfirmPassword))
-            {
-                ModelState.AddModelError(
-                    nameof(vm.ConfirmPassword),
-                    "確認用パスワードは必須です。");
-            }
-            else if (vm.Password != vm.ConfirmPassword)
-            {
-                ModelState.AddModelError(
-                    nameof(vm.ConfirmPassword),
-                    "パスワードと確認用パスワードが一致しません。");
-            }
-        }
-
-
-        // 4. エラー判定（この段階ではパスワードの不要なエラーは消えています）
         if (!ModelState.IsValid)
         {
             vm.Departments = await BuildDepartmentSelectListAsync(false, vm.DeptId);
             return View(vm);
         }
 
-        // 5. 部署名設定と確認画面への遷移処理
         await SetDepartmentNameAsync(vm);
-
-        // TempData保存
         SaveFormToTempData(vm);
 
-        // 確認画面へ
         return RedirectToAction(nameof(EditConfirm), new { id = vm.EmpId });
     }
+
 
    
 
@@ -521,24 +491,47 @@ public class EmployeesController : Controller
 
     private void ValidateCreatePassword(EmployeeFormViewModel vm)
     {
-        // 新規登録時のみ
-        if (!vm.IsEdit)
-        {
-            // パスワード必須
-            if (string.IsNullOrWhiteSpace(vm.Password))
-            {
-                ModelState.AddModelError(
-                    nameof(vm.Password),
-                    ValidationMessages.Password_Required);
-            }
+        // 新規登録ではパスワード必須。
+        ValidatePasswordWhenRequired(vm);
+    }
 
-            // 確認用必須
-            if (string.IsNullOrWhiteSpace(vm.ConfirmPassword))
-            {
-                ModelState.AddModelError(
-                    nameof(vm.ConfirmPassword),
-                    "確認用パスワードは必須です。");
-            }
+    private void ValidateEditPassword(EmployeeFormViewModel vm)
+    {
+        if (string.IsNullOrWhiteSpace(vm.Password))
+        {
+            // 編集時にパスワード未入力なら、パスワード変更なし。
+            // 確認用パスワードに値が残っていても検証・更新しない。
+            vm.Password = string.Empty;
+            vm.ConfirmPassword = string.Empty;
+            ModelState.Remove(nameof(vm.Password));
+            ModelState.Remove(nameof(vm.ConfirmPassword));
+            return;
+        }
+
+        // 編集時でもパスワードが入力された場合だけ、確認用パスワードとポリシーを検証する。
+        ValidatePasswordWhenRequired(vm);
+    }
+
+    private void ValidatePasswordWhenRequired(EmployeeFormViewModel vm)
+    {
+        if (string.IsNullOrWhiteSpace(vm.Password))
+        {
+            ModelState.AddModelError(nameof(vm.Password), ValidationMessages.Password_Required);
+            return;
+        }
+
+        if (vm.Password.Length < 8 || vm.Password.Length > 100)
+        {
+            ModelState.AddModelError(nameof(vm.Password), "パスワードは8文字以上100文字以下で入力してください。");
+        }
+
+        if (string.IsNullOrWhiteSpace(vm.ConfirmPassword))
+        {
+            ModelState.AddModelError(nameof(vm.ConfirmPassword), "確認用パスワードは必須です。");
+        }
+        else if (vm.Password != vm.ConfirmPassword)
+        {
+            ModelState.AddModelError(nameof(vm.ConfirmPassword), "パスワードと確認用パスワードが一致しません。");
         }
     }
 

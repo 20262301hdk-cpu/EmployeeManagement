@@ -17,17 +17,17 @@ public class EmployeeFormViewModel
     [EmailAddress(ErrorMessage = "メールアドレスの形式が正しくありません。")]
     public string Email { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "パスワードは必須です。")]
-    [StringLength(100, MinimumLength = 8,ErrorMessage = "パスワードは8文字以上100文字以下で入力してください。")]
+    // 編集画面では空欄ならパスワードを変更しないため、
+    // Required / StringLength(MinimumLength) / Compare は付けず、
+    // 登録時・編集時入力ありの場合だけ EmployeesController 側で条件付き検証する。
     [DataType(DataType.Password)]
     [Display(Name = "パスワード")]
     public string? Password { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "確認用パスワードは必須です。")]
+    // 編集画面でパスワード未入力の場合は確認用パスワードも検証しない。
     [DataType(DataType.Password)]
-    [Compare(nameof(Password), ErrorMessage = "パスワードと確認用パスワードが一致しません。")]
     [Display(Name = "パスワード確認")]
-    public string ConfirmPassword { get; set; } = string.Empty;
+    public string? ConfirmPassword { get; set; } = string.Empty;
 
 
     [Display(Name = "氏名")]
