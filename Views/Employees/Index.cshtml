@@ -82,4 +82,56 @@
 
 @* TODO: T-14C [チャレンジ] ページャ [Tag: Model.Items.PageCount / asp-route-* / HasPreviousPage / HasNextPage]
    → 詳細設計書 §12.2.2 / §13.2 *@
+@if (Model.Items.PageCount > 1)
+{
+    <div class="pagination-container">
+        <ul class="pagination">
 
+            @if (Model.Items.HasPreviousPage)
+            {
+                <li>
+                    <a asp-action="Index"
+                       asp-route-page="@(Model.Items.PageNumber - 1)"
+                       asp-route-empName="@Model.EmpName"
+                       asp-route-deptId="@Model.DeptId">
+                        ← 前へ
+                    </a>
+                </li>
+            }
+
+            @for (int i = 1; i <= Model.Items.PageCount; i++)
+            {
+                if (i == Model.Items.PageNumber)
+                {
+                    <li class="active">
+                        <span>@i</span>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a asp-action="Index"
+                           asp-route-page="@i"
+                           asp-route-empName="@Model.EmpName"
+                           asp-route-deptId="@Model.DeptId">
+                            @i
+                        </a>
+                    </li>
+                }
+            }
+
+            @if (Model.Items.HasNextPage)
+            {
+                <li>
+                    <a asp-action="Index"
+                       asp-route-page="@(Model.Items.PageNumber + 1)"
+                       asp-route-empName="@Model.EmpName"
+                       asp-route-deptId="@Model.DeptId">
+                        次へ →
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </div>
+}

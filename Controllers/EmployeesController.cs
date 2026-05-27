@@ -59,7 +59,8 @@ public class EmployeesController : Controller
         // TODO: T-06C [チャレンジ] [API: ToPagedListAsync] 下の 2 行を Items = await rows.ToPagedListAsync(page, PageSize); に置き換える
         //        → 詳細設計書 §7.2 / §13.2
         var list = await rows.ToListAsync();
-        var items = list.ToPagedList(1, Math.Max(list.Count, 1));
+        var items = list.ToPagedList(page, PageSize);
+
 
         var vm = new EmployeeListViewModel
         {
