@@ -64,14 +64,17 @@
                 <td>@item.DeptName</td>
 
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.EmpId">詳細</a>
+                    <a asp-controller="Employees" asp-action="Details"
+                       asp-route-id="@item.EmpId" class="action-btn detail-btn">詳細</a>
 
                     @if (User.IsInRole("Admin"))
                     {
                         <span>|</span>
-                        <a asp-action="Edit" asp-route-id="@item.EmpId">編集</a>
+                        <a asp-controller="Employees" asp-action="Edit"
+                           asp-route-id="@item.EmpId" class="action-btn edit-btn">編集</a>
                         <span>|</span>
-                        <a asp-action="Delete" asp-route-id="@item.EmpId">削除</a>
+                        <a asp-controller="Employees"  asp-action="Delete"
+                           asp-route-id="@item.EmpId"  class="action-btn delete-btn">削除</a>
                     }
                 </td>
 

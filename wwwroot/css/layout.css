@@ -394,3 +394,44 @@ header {
 }
 
 /*アクションボタン*/
+.action-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 4px;
+}
+
+.detail-btn {
+    border: 1px solid #4da3ff;
+    color: #4da3ff;
+}
+
+.edit-btn {
+    border: 1px solid #5c9d7c;
+    color: #3f7d5f;
+}
+
+.delete-btn {
+    border: 1px solid #dc3545;
+    color: #dc3545;
+}
+
+/* 一覧へ戻るボタン */
+a.back-btn {
+    display: inline-block !important;
+    padding: 10px 20px !important;
+    border: 1px solid #999 !important;
+    border-radius: 8px !important;
+    background-color: #f3f4f6 !important;
+    color: #333 !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+    width: auto !important;
+}
+
+    a.back-btn:hover {
+        background-color: #e5e7eb !important;
+    }

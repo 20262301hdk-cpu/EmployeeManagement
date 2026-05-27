@@ -4,7 +4,13 @@
 }
 <h2>社員編集 - 確認</h2>
 
-<p><a asp-action="Index">一覧へ戻る</a></p>
+
+<div class="button-row">
+    <a asp-action="Index" class="back-btn">
+        一覧へ戻る
+    </a>
+</div>
+
 
 @* TODO: T-14C [チャレンジ] 確認画面 (テーブル + 戻る/更新フォーム) [Tag: @Model.* / asp-action / asp-route-id / hidden name="back" value="true"]
    → 詳細設計書 §12.2.2 / §13.2
