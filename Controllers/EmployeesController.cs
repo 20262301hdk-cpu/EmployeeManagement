@@ -29,63 +29,89 @@ public class EmployeesController : Controller
 
     public async Task<IActionResult> Index(string? empName, int? deptId, int page = 1)
     {
+        // Employeesテーブルからデータ取得準備
+        // 部署情報も一緒に取得し、社員ID順に並べる
         var query = _db.Employees
             .AsNoTracking()
             .Include(e => e.Department)
             .OrderBy(e => e.EmpId)
             .AsQueryable();
 
-        // TODO: T-06 [課題] [API: Where / string.Contains]
-        //        → 詳細設計書 §7.2 / §13.1
+        // TODO: T-06 [課題] [API: Where / string.Contains]→ 詳細設計書 §7.2 / §13.1
+        // 氏名検索
+        // empNameが入力されている場合、名前に検索文字が含まれる社員だけ取得
         if (!string.IsNullOrWhiteSpace(empName))
         {
             query = query.Where(e => e.EmpName.Contains(empName));
         }
+        // 部署検索
+        // 部署IDが選択されている場合、該当部署の社員だけ取得
+        if (deptId.HasValue)
+        {
+            query = query.Where(e => e.DeptId == deptId.Value);
+        }
 
-
-        // TODO: T-06C [チャレンジ] [API: Where / int?.HasValue / int?.Value]
-        //        → 詳細設計書 §7.2 / §13.2
-
+        // TODO: T-06C [チャレンジ] [API: Where / int?.HasValue / int?.Value]→ 詳細設計書 §7.2 / §13.2
+        // Employee → EmployeeRowViewModel に変換
         var rows = query.Select(e => new EmployeeRowViewModel
         {
             EmpId = e.EmpId,
             EmpName = e.EmpName,
             Gender = e.Gender,
             Birthday = e.Birthday,
+
+            // Departmentがnullの場合は空文字
             DeptName = e.Department != null ? e.Department.DeptName : string.Empty
         });
 
         // 暫定 (チャレンジ未実装時): 全件を 1 ページに格納して IPagedList<EmployeeRowViewModel> を成立させる。
-        // TODO: T-06C [チャレンジ] [API: ToPagedListAsync] 下の 2 行を Items = await rows.ToPagedListAsync(page, PageSize); に置き換える
-        //        → 詳細設計書 §7.2 / §13.2
+        // TODO: T-06C [チャレンジ] [API: ToPagedListAsync]下の 2 行を
+        // Items = await rows.ToPagedListAsync(page, PageSize); に置き換える→ 詳細設計書 §7.2 / §13.2
+        // ページング処理
+        // 1ページ10件でデータ取得
         var list = await rows.ToListAsync();
         var items = list.ToPagedList(page, PageSize);
 
-
+        // Viewに渡すデータ作成
         var vm = new EmployeeListViewModel
         {
+            // 検索条件保持
             EmpName = empName,
             DeptId = deptId,
+
+            // 現在ページ
             Page = page,
+
+            // 部署ドロップダウン作成
             Departments = await BuildDepartmentSelectListAsync(includeEmpty: true, deptId),
+
+            // 一覧データ
             Items = items
         };
+        //Viewへ返す
         return View(vm);
     }
 
+    //社員詳細画面
     public async Task<IActionResult> Details(int id)
     {
+        // 社員・部署情報・ログインユーザー情報取得
         var employee = await _db.Employees
             .AsNoTracking()
             .Include(e => e.Department)
             .Include(e => e.AspNetUser)
             .FirstOrDefaultAsync(e => e.EmpId == id);
+
+        // 社員が存在しない場合
         if (employee is null || employee.AspNetUser is null)
         {
             return NotFound();
         }
 
+        //ロール取得
         var roles = await _userManager.GetRolesAsync(employee.AspNetUser);
+
+        // 画面表示用ViewModel作成
         var vm = new EmployeeRowViewModel
         {
             EmpId = employee.EmpId,
@@ -94,50 +120,69 @@ public class EmployeesController : Controller
             Gender = employee.Gender,
             Address = employee.Address,
             Birthday = employee.Birthday,
+
+            // 最初のロールを表示
             Role = roles.FirstOrDefault() ?? string.Empty,
+            // null対策
             DeptName = employee.Department?.DeptName ?? string.Empty
         };
-
+        // 詳細画面へ渡す
         return View(vm);
     }
 
+    // 新規登録画面表示(GET)
     [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<IActionResult> Create()
     {
-        var vm = new EmployeeFormViewModel { Gender = 1, Role = "User", IsEdit = false };
+        // 初期値設定
+        var vm = new EmployeeFormViewModel 
+        { Gender = 1, Role = "User", IsEdit = false };
+        // 部署一覧取得
         vm.Departments = await BuildDepartmentSelectListAsync(includeEmpty: false, vm.DeptId);
+        // 入力画面表示
         return View(vm);
     }
 
+    // 新規登録処理(POST)
     [Authorize(Roles = "Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(EmployeeFormViewModel vm, bool back = false)
     {
-        // TODO: T-07 [課題] [API: TempData / ModelState.IsValid / RedirectToAction / BuildDepartmentSelectListAsync]
-        //        → 詳細設計書 §7.2 / §13.1
+        // TODO: T-07 [課題] [API: TempData / ModelState.IsValid / RedirectToAction / BuildDepartmentSelectListAsync] → 詳細設計書 §7.2 / §13.1
+        // 生年月日範囲チェック
         ValidateBirthdayRange(vm);
-        if(back)
+
+        // 確認画面から戻るボタン押下時
+        if (back)
         {
+            // 部署一覧再設定
             vm.Departments = await BuildDepartmentSelectListAsync(false, vm.DeptId);
+            // 入力画面へ戻る
             return View(vm);
 
         }
+
         // 入力チェック
+
+        // パスワードチェック
         ValidateCreatePassword(vm);
-
+        // 生年月日チェック
         ValidateBirthdayRange(vm);
-
+        // メール重複チェック
         await ValidateEmailDuplicateAsync(vm.Email);
-        // エラー時
+        // バリデーションエラー時
         if (!ModelState.IsValid)
         {
+            // 部署一覧再設定
             vm.Departments = await BuildDepartmentSelectListAsync(false, vm.DeptId);
 
+            // 入力画面再表示
             return View(vm);
         }
 
+        // 確認画面表示準備
         // 部署名設定
         await SetDepartmentNameAsync(vm);
 
@@ -148,29 +193,36 @@ public class EmployeesController : Controller
         return RedirectToAction(nameof(CreateConfirm));
     }
 
+    // 新規登録確認画面
     [Authorize(Roles = "Admin")]
     [HttpGet]
     public IActionResult CreateConfirm()
     {
+        // TempDataからデータ取得
         var vm = ReadFormFromTempData(keep: true);
+
+        // データがない場合は一覧へ
         if (vm is null)
         {
             return RedirectToAction(nameof(Index));
         }
 
+        // 確認画面表示
         return View(vm);
     }
 
+    // 新規登録完了処理
     [Authorize(Roles = "Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateComplete()
     {
-        // TODO: T-08 [課題] [API: TempData / UserManager.CreateAsync / UserManager.AddToRoleAsync / Employees.Add / SaveChangesAsync / ViewBag]
-        //        → 詳細設計書 §7.2 / §13.1
+        // TODO: T-08 [課題] [API: TempData / UserManager.CreateAsync / UserManager.AddToRoleAsync
+        // / Employees.Add / SaveChangesAsync / ViewBag]→ 詳細設計書 §7.2 / §13.1
         // TempDataから復元
         var vm = ReadFormFromTempData(keep: false);
 
+        // データがない場合
         if (vm is null)
         {
             return RedirectToAction(nameof(Index));
@@ -183,15 +235,19 @@ public class EmployeesController : Controller
             Email = vm.Email
         };
 
+        // ユーザー登録
         var result = await _userManager.CreateAsync(user, vm.Password!);
 
-        // ユーザー作成失敗時
+          // 登録失敗時
         if (!result.Succeeded)
         {
+            // エラーメッセージ追加
             AddIdentityErrors(result);
 
+            // 部署一覧再設定
             vm.Departments = await BuildDepartmentSelectListAsync(false, vm.DeptId);
 
+            // 入力画面へ戻る
             return View("Create", vm);
         }
 
@@ -209,13 +265,17 @@ public class EmployeesController : Controller
             DeptId = vm.DeptId
         };
 
+        // DB追加
         _db.Employees.Add(employee);
 
+        // DB保存
         await _db.SaveChangesAsync();
 
+        // 完了画面表示
         // 新規社員IDをViewBagへ
         ViewBag.EmpId = employee.EmpId;
 
+        // 完了画面表示
         return View();
     }
 
