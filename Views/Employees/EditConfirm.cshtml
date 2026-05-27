@@ -53,7 +53,7 @@
     @* --- 1. 修正する（戻る）ボタン用のフォーム --- *@
     @* 入力画面(Edit)へPOSTで戻り、引数 back=true を渡して入力を復元させます *@
     <div class="button-row">
-        <form asp-action="Create" method="get">
+        <form asp-action="Edit" method="post">
             <input type="hidden" name="back" value="true">
             <button type="submit">戻る</button>
         </form>

@@ -14,22 +14,32 @@
 @* TODO: T-14C [チャレンジ] 削除確認画面 (テーブル + 削除/キャンセル) [Tag: @Model.* / asp-action / hidden name="id" value="@Model.EmpId"]
    → 詳細設計書 §12.2.2 / §13.2
    下記ブロックを解除して実装する。
+*@
 <div class="alert alert-warning">以下の社員情報を削除します。本当によろしいですか?</div>
 <table class="simple-table">
     <tbody>
-        <tr><th>社員ID</th><td></td></tr>
-        <tr><th>氏名</th><td></td></tr>
-        <tr><th>メールアドレス</th><td></td></tr>
-        <tr><th>性別</th><td></td></tr>
-        <tr><th>住所</th><td></td></tr>
-        <tr><th>生年月日</th><td></td></tr>
-        <tr><th>ロール</th><td></td></tr>
-        <tr><th>部署</th><td></td></tr>
+        <tr><th>社員ID</th>
+            <td>@Model.EmpId</td></tr>
+        <tr><th>氏名</th>
+            <td>@Model.EmpName</td></tr>
+        <tr><th>メールアドレス</th>
+            <td>@Model.Email</td></tr>
+        <tr><th>性別</th>
+            <td>@Model.Gender</td></tr>
+        <tr><th>住所</th>
+            <td>@Model.Address</td></tr>
+        <tr><th>生年月日</th>
+            <td>@Model.Birthday</td></tr>
+        <tr><th>ロール</th>
+            <td>@Model.Role</td></tr>
+        <tr><th>部署</th>
+            <td>@Model.DeptName</td></tr>
     </tbody>
 </table>
-<form method="post" action="#">
+<form asp-action="DeleteComplete" method="post">
+    <input type="hidden" name="id" value="@Model.EmpId" />
     <div class="button-row">
-        <button type="submit">削除</button>
+        <button type="submit" class="btn btn-primary">削除</button>
+        <a class="btn-link" href="/Employees">キャンセル</a>
     </div>
 </form>
-*@

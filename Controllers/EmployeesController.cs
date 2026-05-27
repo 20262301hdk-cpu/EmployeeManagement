@@ -430,7 +430,7 @@ public class EmployeesController : Controller
             }
         }
         // 削除が完了したら一覧画面へ遷移
-        return RedirectToAction(nameof(Index));
+        return View();
     }
     
 
