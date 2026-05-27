@@ -55,9 +55,37 @@ body > div {
 }
 
 
+/* メニュー間の余白 */
+#sidebar li {
+    margin-bottom: 12px;
+}
 
-/* リストの記号を非表示 */
-li {
+/* サイドバーのリストだけ記号を消す */
+#sidebar li {
+    list-style: none;
+}
+
+/* メニューリンク */
+#sidebar a {
+    display: block;
+    padding: 10px 14px;
+    text-decoration: none;
+    color: #333;
+    background-color: white;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+/* ホバー時 */
+#sidebar a:hover {
+    background-color: #dff1ff;
+    color: #007bff;
+    transform: translateX(3px);
+}
+
+    /* リストの記号を非表示 */
+    li {
     list-style-type: none;
 }
 
