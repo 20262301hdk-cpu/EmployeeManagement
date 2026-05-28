@@ -70,6 +70,13 @@ public class EmployeesController : Controller
         // ページング処理
         // 1ページ10件でデータ取得
         var list = await rows.ToListAsync();
+
+        // 検索した結果、該当する社員が0件だった場合の処理
+        if (list.Count == 0)
+        {
+            ViewBag.ErrorMessage = "該当する社員が見つかりませんでした。";
+        }
+
         var items = list.ToPagedList(page, PageSize);
 
         // Viewに渡すデータ作成
